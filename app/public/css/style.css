@@ -1,0 +1,147 @@
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.container{
+    border-radius: 20px;
+    background-color: rgba(75, 117, 130, .51);
+    width: 500PX;
+    height: auto;
+    margin-top: 60px;
+    
+}
+.image{
+    margin-left: 90px;
+    padding: 10px;
+    width: 300px;
+    height: 200px;
+    margin-top: -30px;
+   
+}
+.H1{
+    margin-left: 55px;
+    padding: center;
+    height: 200px;
+    margin-top: 0;
+    line-height: 40%;
+    font-weight: bold;
+    font-style: initial;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+form{
+    
+    height: 400px;
+    margin-top: -120px;
+
+}
+.mail{
+    border-radius: 10px;
+    border: 3px solid #7ac2c1 ;
+    width: 400px;
+    margin-top: -100px;
+    margin-left: 40px;
+    height: 35px;
+    background-color:rgb(255, 253, 253, .85);
+    
+    
+}
+.email_cf{
+    border-radius: 10px;
+    width: 400px;
+    border: 3px solid #7ac2c1 ;
+    margin-top: 15px;
+    margin-left: 40px;
+    height: 35px;
+    background-color:rgb(255, 253, 253, .85);
+
+    
+}
+.pwd{
+    border-radius: 10px;
+    border: 3px solid #7ac2c1 ;
+     width: 400px;
+    height: 35px;
+    margin-top: 15px;
+    margin-left: 40px;
+    background-color:rgb(255, 253, 253, .85);
+
+}
+.pwd_cf{
+    border-radius: 10px;
+    border: 3px solid #7ac2c1 ;
+    width: 400px;
+    margin-top: 15px;
+    margin-left: 40px;
+    height: 35px;
+    background-color:rgb(255, 253, 253, .85);
+
+}
+.form-check{
+    margin-left: 40px;
+    margin-top: 10px;
+}
+.btn-creer{
+    border-radius :15px;
+    background-color:rgb(149, 237, 195, .80) ;
+    margin-left: 40px;
+    height: 35px;
+    margin-top: 15px;
+    width: 400px; ;
+    
+}
+.login{
+    margin-left: 40px;
+    margin-top: 10px;
+    font-style: normal;
+    color: rgb(0, 0, 0);
+
+}
+::placeholder {
+    color: rgb(19, 19, 28);
+    font-size: 1em;
+    color: black;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+.link_creer_compte{
+    margin-left: 180px;
+    margin-top:100;
+    font-style:initial;
+    color: rgb(189, 195, 215);
+    padding:center;
+    line-height:50px;
+    font-size: larger;
+
+}
+.container_login{
+    border-radius: 20px;
+    background-color: rgba(75, 117, 130, .51);
+    margin-top: 60px;
+    width: 500px;
+    padding: -110px;
+    margin-left:32%;
+}
+.H2{
+    margin-left: 140px;
+    padding: center;
+    height: 200px;
+    margin-top: 0;
+    line-height: 40%;
+    font-weight: bold;
+    font-style: initial;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+.messagebox {
+    background-color: #5888c6;
+    color: white;
+    padding: 15px;
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    margin: auto;
+    font-weight: bold;
+    transition: 0.3s;
+    width:500px;
+    border-radius: 15px;
+}

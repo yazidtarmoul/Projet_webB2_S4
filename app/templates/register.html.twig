@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+
+{% block imgurl %}create-account.png{% endblock %}
+
+{% block content %}
+    {% if msg1 %}
+    <div class="messagebox">{{msg1}}</div>
+    {% endif %}
+     
+
+
+<div class = "container">
+    
+            
+      
+
+    <img class ="image"src="img/capture-d-e-cran-2024-01-17-a-17-46-10.png" alt="connexion echoué">
+     <h1 class="H1"> Créer votre compte </h1>
+
+<form action="" method="post">
+    <div>
+        <input type="email"
+                required="required"
+                class ="mail"
+                id="email"
+                name="email"
+                placeholder="Entrez votre email"
+        >
+    
+    </div>
+    <div>
+        <input type="email_cfg"
+                class="email_cf"
+                required="required"
+                id="email_cfg"
+                name="email_cfg"
+                placeholder="Confimez votre email"
+        >
+     
+    </div>
+    <div>
+        <input type="password"
+                required="required"
+                class="pwd"
+                id="password"
+                name="password"
+                placeholder="Entrez votre password"
+        >
+
+    </div>
+    <div>
+        <input type="password"
+                required="required"
+                class="pwd_cf"
+                id="passwordcfg"
+                name="passwordcfg"
+                placeholder="Confimez votre password"
+        >
+
+    
+    
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <p><a href="condition.html.twig" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">I agree all statements in Teams of servic</a></p>
+    </div>
+        <input type="submit" class="btn-creer" name ="send" value="Créer">
+    </div><hr class="border border-primary border-2 opacity-50">
+    <div ><p class="login">Have already an account? <a href="index.php" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Login here</a></p></div>
+    </form>
+</div>
+{% endblock %}
