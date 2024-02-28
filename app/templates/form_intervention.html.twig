@@ -1,0 +1,84 @@
+{% extends "base.html.twig" %}
+{% block content %}
+
+    <header class = "header">
+        <img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
+        <img class ="imgheader2"src="img/image 18 (1).png" alt="Logo paramètre " >
+        <img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" >
+    </header>
+    <main>
+        <form action="" method ="post">
+       
+        <div>
+            <label for="titre_intervention">Titre d'intervention  :</label><br><br>
+            <input type="text"
+                        required="required"
+                        class ="titre_intervention"
+                        id="titre_intervention_form"
+                        name="titre_intervention_form">
+        </div>
+        <div>
+            <label for="date_intervnetion"> Date de l'date_intervnetion :</label><br><br>
+            <input type="date" 
+                         name="date_intervnetion" 
+                         id="date_intervnetion"
+                         required="required"
+                         class="date_inte">
+        </div>
+        <div>
+            <label for="heure_dispo">Heure de disponibilité :</label><br><br>
+            <input type="time" 
+                        name="heure_dispo" 
+                        id="heure_dispo"
+                        class="heure"
+                        required="required">
+        </div><br>
+        <div>
+            <label for="adresse">Adresse de l’intervention :</label><br><br>
+            <input type="text" 
+                        name="adresse"
+                        id="adresse"
+                        class="adresse_intervention"
+                        required="required">
+        </div>
+        <div>
+            <label for="ville">Ville :</label><br><br>
+            <input type="text" 
+                        name="ville"
+                        id="ville"
+                        class="ville_inter"
+                        required="required">
+        </div>
+        <div>
+            <label for="ugence">Etat d'urgence:</label><br><br>
+            <select id="urgence" name="urgence">
+              <option value="Faible">Faible</option>
+              <option value="Moyen">Moyen</option>
+              <option value="adeterminer">A detérminer</option>
+              <option value="eleve">Elevé</option>
+            </select>
+        </div><br><br>
+        <div>
+            <label for="codepostal">Code Postale :</label><br><br>
+            <input type="text" 
+                        name="codepostal"
+                        id="codepostal"
+                        class="codepostal_inter"
+                        required="required">
+        </div>
+        <div>
+            <label for="pays">Pays :</label><br>
+            <input type="text" 
+                        name="pays"
+                        id="pays"
+                        class="pays_inter"
+                        required="required">
+        </div>
+        <div>
+            <label for="description">Description du problème :</label><br><br>
+            <textarea name="description" id="description" cols="130" rows="10"></textarea>
+        </div>
+        <input type="submit" name="envoyer" value="Envoyer" class="btn_envyer">
+    </form>
+    </main>
+{% endblock %}

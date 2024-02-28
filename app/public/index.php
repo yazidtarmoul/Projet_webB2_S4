@@ -1,10 +1,10 @@
 <?php
 
 require_once '../vendor/autoload.php';
-
 use App\Page;
-
+use App\Session;
 $Page = new Page();
+$Session = new Session();
 $msg = null;
 
 if (isset($_POST['send'])) {
@@ -19,16 +19,24 @@ if (isset($_POST['send'])) {
         } else {
             if (!password_verify($_POST['password'], $user['password'])) {
                 $msg = "Email ou mot de passe incorrect";
-            } else {
+            } else { 
+
                 $msg = "Connecté";
                 $Page->session->add('User', $user);
-                header('Location: profile.php');
+                header("Location: acceuil.php");
+                exit(); 
             }
         }
     } else {
         $msg = "Veuillez remplir tous les champs du formulaire.";
     }
-
+    
 }
+
+if($Session->isConnected())
+{ 
+    header("Location: acceuil.php");
+    exit();
+}
+
 echo $Page->render('index.html.twig', ["msg" => $msg]);
-?>

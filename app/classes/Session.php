@@ -3,11 +3,9 @@
 namespace App;
 
 class Session 
-{
-    function __construct()
-    {
-        session_start();
-    }
+
+{ 
+   
     public function add(string $key, $data)
     {
         $_SESSION[$key] = $data;
@@ -21,7 +19,7 @@ class Session
         unset($_SESSION);
         session_destroy();
     }
-    public function isConnected()
+    function isConnected()
     {
         return isset($_SESSION['user']);
     }
