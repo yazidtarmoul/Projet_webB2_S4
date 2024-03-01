@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<header class="header">
+  <img class = "imgheader1"src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
+  <img class ="imgheader2"src="img/image 18 (1).png" alt="Logo paramètre " >
+  <img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" >
+</header>
+    
+    <div class="d-flex">
+      <nav class="Admin_div_utulisateurs my-10">
+        <label class="Utulisateur" for="select_users">Utulisateurs :</label>
+        <select name="select_users" id="select_users">
+          <option value="Admin">Admin</option>
+          <option value="Standardistes">Standardistes</option>
+          <option value="Intervenants">Intervenants</option>
+          <option value="Clients">Clients</option>
+          
+        </select>
+      </nav>
+
+        <table class="table caption-top mx-4 my-6 table-bordered">
+          <caption>List of users</caption>
+          <thead>
+            <tr class="table-success">
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+

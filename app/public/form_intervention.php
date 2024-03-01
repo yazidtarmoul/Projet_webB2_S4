@@ -17,24 +17,35 @@ if (isset($_POST['envoyer'])) {
     $ville = $_POST['ville'] ?? '';
     $description = $_POST['description'] ?? '';
     $urgence = $_POST['urgence'] ?? '';
-    $Page->insert_form('intervention', [
+
+    // Insérer d'abord l'urgence
+    $urgenceData = [
+        'type_urgence' => $urgence,
+        'description' => $description,
+    ];
+    $Page->intert_urgence('urgence_deg', $urgenceData);
+
+    // Récupérer l'ID de l'urgence nouvellement insérée
+    $urgence_ID = $Page->link->lastInsertId();
+
+    // Insérer ensuite l'intervention avec l'ID d'urgence approprié
+    $interventionData = [
         'titre' => $titre,
         'date' => $date,
         'heure' => $heure,
         'adresse' => $adresse,
         'codepostal' => $codepostal,
         'pays' => $pays,
-        'ville' => $ville
-    ]); 
-    
-    $Page->intert_urgence('urgence_deg', [
-        'type_urgence' => $urgence,
-        'description' => $description,
-    ]); 
+        'ville' => $ville,
+        'urgence_ID' => $urgence_ID
+    ];
+    $Page->insert_form('intervention', $interventionData);
+
+    // Rediriger après l'insertion
     header("Location: profile.php");
     exit;
-
-    
 }
 
-echo $Page->render('form_intervention.html.twig' ,["msg" => $msg]);
+// Afficher le formulaire
+echo $Page->render('form_intervention.html.twig', ["msg" => $msg]);
+?>

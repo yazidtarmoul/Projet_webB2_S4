@@ -40,16 +40,17 @@ class Page
     //pour form_intervention.php
     public function insert_form(string $table_name, array $data) {
         if ($this->link) {
-            $sql = "INSERT INTO ".$table_name ." (titre, date, heure, adresse, codepostal, ville, pays) VALUES (:titre, :date, :heure, :adresse, :codepostal, :ville, :pays)";   
+            $sql = "INSERT INTO ".$table_name ." (titre, date, heure, adresse, codepostal, ville, pays, urgence_ID) VALUES (:titre, :date, :heure, :adresse, :codepostal, :ville, :pays, :urgence_ID)";   
             $stmt = $this->link->prepare($sql);
             $stmt->bindParam(":titre", $data["titre"]);
             $stmt->bindParam(":date", $data["date"]);
             $stmt->bindParam(":heure", $data["heure"]);
-            $stmt->bindParam("adresse", $data["adresse"]);
+            $stmt->bindParam(":adresse", $data["adresse"]);
             $stmt->bindParam(":codepostal", $data["codepostal"]);
-            $stmt->bindParam("ville", $data["ville"]);
-            $stmt->bindParam("pays", $data["pays"]);
-            
+            $stmt->bindParam(":ville", $data["ville"]);
+            $stmt->bindParam(":pays", $data["pays"]);
+            $stmt->bindParam(":urgence_ID", $data["urgence_ID"]);
+    
             try {
                 $stmt->execute($data);
             } catch (\PDOException $e) {
@@ -57,6 +58,7 @@ class Page
             }
         }
     }
+    
     public function intert_urgence(string $table_name, array $data1) {
         if ($this->link) { 
             $sql1 = "INSERT INTO ". $table_name ." (type_urgence, description) VALUES (:urgence, :description)";

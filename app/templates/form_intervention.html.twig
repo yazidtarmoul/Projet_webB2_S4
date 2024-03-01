@@ -1,84 +1,100 @@
 {% extends "base.html.twig" %}
-{% block content %}
+{% block imgurl %}pexels-thought-catalog-2228583.jpg{% endblock %}
 
+{% block content %}
+        {% if msg != null %}
+        <div class="messagebox">{{msg}}</div>
+        {% endif %}
+        </div> 
     <header class = "header">
         <img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
         <img class ="imgheader2"src="img/image 18 (1).png" alt="Logo paramètre " >
         <img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" >
     </header>
     <main>
-        <form action="" method ="post">
-       
-        <div>
-            <label for="titre_intervention">Titre d'intervention  :</label><br><br>
+        <form action="" method ="post" class="row g-3 formintervention">
+         <h1 class="text-center" ><strong> Formulaire d'intervention</strong></h1>
+        <div class="col-md-6">
+            <label for="titre_intervention" class="form-label" >Titre d'intervention  :</label>
             <input type="text"
                         required="required"
-                        class ="titre_intervention"
+                        class="form-control"
                         id="titre_intervention_form"
                         name="titre_intervention_form">
         </div>
-        <div>
-            <label for="date_intervnetion"> Date de l'date_intervnetion :</label><br><br>
-            <input type="date" 
-                         name="date_intervnetion" 
-                         id="date_intervnetion"
-                         required="required"
-                         class="date_inte">
+       <div class="row g-2">
+            <div class="col-sm-4">
+                <label for="date_intervnetion" class="form-label">Date d'intervention:</label>
+                <input type="date" 
+                       name="date_intervnetion" 
+                       id="date_intervnetion"
+                       required="required"
+                       class="form-control">
+            </div>
+            <div class="col-sm-4"> 
+                <label for="heure_dispo" class="form-label">Heure de disponibilité:</label>
+                <input type="time" 
+                       name="heure_dispo" 
+                       id="heure_dispo"
+                       class="form-control"
+                       required="required">
+            </div>
         </div>
-        <div>
-            <label for="heure_dispo">Heure de disponibilité :</label><br><br>
-            <input type="time" 
-                        name="heure_dispo" 
-                        id="heure_dispo"
-                        class="heure"
-                        required="required">
-        </div><br>
-        <div>
-            <label for="adresse">Adresse de l’intervention :</label><br><br>
-            <input type="text" 
-                        name="adresse"
-                        id="adresse"
-                        class="adresse_intervention"
-                        required="required">
+        
+    <div class="row g-2">
+            <div class="col-sm-7">
+                <label for="adresse" class="form-label">Adresse de l’intervention :</label>
+                <input type="text" 
+                       name="adresse"
+                       id="adresse"
+                       class="form-control"
+                       required="required">
+            </div>
+            <div class="col-sm">
+                <label for="ville" class="form-label">Ville :</label>
+                <input type="text" 
+                       name="ville"
+                       id="ville"
+                       class="form-control"
+                       required="required">
+            </div>
+            <div class="col-sm">
+                <label for="codepostal" class="form-label">Code Postal :</label>
+                <input type="text" 
+                       name="codepostal"
+                       id="codepostal"
+                       class="form-control"
+                       required="required">
+            </div>
+    </div>
+
+        <div class="row g-2">
+            <div class="col-sm-4">
+                <label for="ugence" class="form-label">Etat d'urgence:</label>
+                <select  id="urgence" name="urgence" class="form-select" required="required">
+                  <option value="selected" selected>Sélectionner le degré d'urgence</option>
+                  <option value="Faible">Faible</option>
+                  <option value="Moyen">Moyen</option>
+                  <option value="adeterminer">A detérminer</option>
+                  <option value="eleve">Elevé</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="pays" class="form-label">Pays:</label>
+                <input type="text" 
+                            name="pays"
+                            id="pays"
+                            class="form-control"
+                            required="required">
+            </div>
+        </div>    
+        <div class="row g-2 col-sm-15">
+            <label for="description" class="form-label">Description du problème :</label>
+            <textarea name="description" id="description" cols="130" rows="5" class="form-control"></textarea>
         </div>
-        <div>
-            <label for="ville">Ville :</label><br><br>
-            <input type="text" 
-                        name="ville"
-                        id="ville"
-                        class="ville_inter"
-                        required="required">
+        <div class="d-grid gap-1 col-4 mx-auto row g-2">
+        <input type="submit" name="envoyer" value="Envoyer" class="btn btn-dark">
         </div>
-        <div>
-            <label for="ugence">Etat d'urgence:</label><br><br>
-            <select id="urgence" name="urgence">
-              <option value="Faible">Faible</option>
-              <option value="Moyen">Moyen</option>
-              <option value="adeterminer">A detérminer</option>
-              <option value="eleve">Elevé</option>
-            </select>
-        </div><br><br>
-        <div>
-            <label for="codepostal">Code Postale :</label><br><br>
-            <input type="text" 
-                        name="codepostal"
-                        id="codepostal"
-                        class="codepostal_inter"
-                        required="required">
-        </div>
-        <div>
-            <label for="pays">Pays :</label><br>
-            <input type="text" 
-                        name="pays"
-                        id="pays"
-                        class="pays_inter"
-                        required="required">
-        </div>
-        <div>
-            <label for="description">Description du problème :</label><br><br>
-            <textarea name="description" id="description" cols="130" rows="10"></textarea>
-        </div>
-        <input type="submit" name="envoyer" value="Envoyer" class="btn_envyer">
     </form>
     </main>
 {% endblock %}

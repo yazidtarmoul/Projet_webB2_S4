@@ -345,3 +345,20 @@ footer {
     padding: 20px; /* Espacement intérieur du footer */
 
 }
+.Admin_div_utulisateurs{
+    background-color: #a4c9d4;
+  
+
+}
+.formintervention{
+
+    width: 1080px;
+    height: auto;
+    margin-left: 200px;
+    background-color: #fff;
+    padding-left:2%;
+    padding-right:2%;
+    border-radius:5%;
+    margin-top: 15px;
+
+}
