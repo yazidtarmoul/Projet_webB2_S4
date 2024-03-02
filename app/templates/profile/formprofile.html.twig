@@ -1,0 +1,133 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<header class = "header">
+    <img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
+    <img class ="imgheader2"src="img/image 18 (1).png" alt="Logo paramètre " >
+    <img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" >
+</header>
+<main>
+   <form action="" method="post" class="row g-3 form_prof rounded-4">
+        <div class="card-body">
+            <h1 class="h1 mb-3 text-center"><strong>Compléter vos informations </strong></h1>
+                <div class="row g-3 mb-3 mt-3">
+                    <div class="col sm">
+                        <label for="nom" class="form-label">Nom:</label>
+                        <input type="text" 
+                                    id="nom"
+                                    name="nom"
+                                    class="form-control"
+                                    required="required">
+                    </div>
+                
+                    <div class="col sm">
+                        <label for="prenom" class="form-label">Prénom:</label>
+                        <input type="text" 
+                                    id="prenom"
+                                    name="prenom"
+                                    class="form-control"
+                                    required="required">
+            
+                    </div>
+                </div> 
+                <div class="row g-2 mb-3">
+                    <div class="col-sm">
+                            <label for="mail" class="form-label">E-mail:</label>
+                            <input type="email" 
+                                   name="mail"
+                                   id="mail"
+                                   class="form-control"
+                                   required="required">
+                    </div>
+                    <div class="col-sm">
+                        <label for="telephone" class="form-label">Téléphone:</label>
+                        <input type="tel" 
+                               name="telephone"
+                               id="telephone"
+                               class="form-control"
+                               required="required">
+                    </div>
+                </div>                
+                <div class="row g-2 mb-3">
+                    <div class="col-sm-7">
+                        <label for="adresse_post" class="form-label">Adresse :</label>
+                        <input type="text" 
+                               name="adresse_post"
+                               id="adresse_post"
+                               class="form-control"
+                               required="required">
+                    </div>
+                    <div class="col-sm">
+                        <label for="ville" class="form-label">Ville :</label>
+                        <input type="text" 
+                               name="ville"
+                               id="ville"
+                               class="form-control"
+                               required="required">
+                    </div>
+                    <div class="col-sm">
+                        <label for="codepostal" class="form-label">Code Postal :</label>
+                        <input type="text" 
+                               name="codepostal"
+                               id="codepostal"
+                               class="form-control"
+                               required="required">
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-sm">
+                            <label for="pays" class="form-label">Pays:</label>
+                            <input type="text" 
+                                   name="pays"
+                                   id="pays"
+                                   class="form-control"
+                                   required="required">
+                    </div>
+                    <div class="col-sm">
+                        <label for="image" class="form-label">Entrer une image: </label>
+                        <input class="form-control" 
+                                type="file" 
+                                id="image"
+                                name="image"
+                                required="required">
+                    </div>
+                </div>
+                <div class="row g-2 mb-6">
+                    <div class="col-sm">
+                            <label for="linkedin" class="form-label">Linkedin(facultatif):</label>
+                            <input type="text" 
+                                   name="linkedin"
+                                   id="linkedin"
+                                   class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="twitter" class="form-label">Twitter(facultatif):</label>
+                        <input type="text" 
+                               name="twitter"
+                               id="twitter"
+                               class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="insta" class="form-label">Instagram(facultatif):</label>
+                        <input type="text" 
+                               name="insta"
+                               id="insta"
+                               class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="fb" class="form-label">Facebook(facultatif):</label>
+                        <input type="text" 
+                               name="fb"
+                               id="fb"
+                               class="form-control">
+                    </div>
+                    
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3 ">
+                        <input type="submit" class="btn btn-dark me-md-2" value="Modifier">
+                        <input type="submit" class="btn btn-dark" name="enregistrer" id="enregistrer" value="Enregistrer">
+                </div>
+        </div>
+    </form>
+     
+</main>
+{% endblock %}

@@ -1,1 +1,11 @@
-test
+<?php
+
+require_once '../vendor/autoload.php';
+
+use App\Page;
+
+$Page = new Page();
+$msg = null;
+
+
+echo $Page->render('profile/pageprofile.html.twig', ["msg" => $msg]);

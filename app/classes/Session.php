@@ -20,12 +20,13 @@ class Session
         session_destroy();
     }
     function isConnected()
-    {
+    {   
+        
         return isset($_SESSION['user']);
     }
     public function hasRole(string $role)
     {
-        if(!this->isConnected()){
+        if(!$this->isConnected()){
             return false;
         }
         /*
