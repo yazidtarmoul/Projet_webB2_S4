@@ -5,6 +5,12 @@ namespace App;
 class Session 
 
 { 
+    public function __construct()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();  
+    }
+}
    
     public function add(string $key, $data)
     {
@@ -14,6 +20,7 @@ class Session
     {
         return isset($_SESSION[$key]) ? $_SESSION[$key] : false;
     }
+    
     public function destroy()
     {
         unset($_SESSION);

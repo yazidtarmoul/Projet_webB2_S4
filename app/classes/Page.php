@@ -79,44 +79,186 @@ class Page
     
     //Pour formprofile et page profile
     
-    public function update_user(string $table_name, array $data2) {
-        if ($this->link) { 
-            $sql3 = "UPDATE ".$table_name." SET nom = :name, 
-                             prenom = :lastname, 
-                             email = :mail, 
-                             image = :image, 
-                             telephone = :telephone,
-                             adressepostal = :adresse_post,
-                             ville = :ville,
-                             codepostal = :codepostal,
-                             pays = :pays,
-                             linkedin = :linkedin,
-                             twitter = :twitter,
-                             insta = :insta,
-                             fb = :fb WHERE id = :user_ID"; 
-            $stmt3 = $this->link->prepare($sql3);
-            $stmt3->bindParam(":name", $data2["nom"]);    
-            $stmt3->bindParam(":lastname", $data2["prenom"]);    
-            $stmt3->bindParam(":mail", $data2["email"]);    
-            $stmt3->bindParam(":image", $data2["image"]);    
-            $stmt3->bindParam(":telephone", $data2["telephone"]);    
-            $stmt3->bindParam(":adresse_post", $data2["adressepostal"]);  
-            $stmt3->bindParam(":ville", $data2["ville"]);  
-            $stmt3->bindParam(":codepostal", $data2["codepostal"]);    
-            $stmt3->bindParam(":pays", $data2["pays"]);    
-            $stmt3->bindParam(":linkedin", $data2["linkedin"]);    
-            $stmt3->bindParam(":twitter", $data2["twitter"]);    
-            $stmt3->bindParam(":insta", $data2["insta"]);    
-            $stmt3->bindParam(":fb", $data2["fb"]);    
-            $stmt3->bindParam(":user_ID", $data2["id"]);  
-    
-            try {
-                $stmt3->execute(); 
-            } catch (\PDOException $e) {
-                var_dump($e->getMessage());
-                throw new \Exception($e->getMessage());
+    public function updateUser(string $table_name, array $newUserData) {
+        $userId = $this->session->get('id');
+        $setClause = '';
+        
+        foreach ($newUserData as $key => $value) {
+            if (array_key_exists($key, $newUserData)) {
+                $setClause .= $key . ' = :' . $key . ', ';
             }
         }
+        
+        // Suppression de la virgule en fin de chaîne
+        $setClause = rtrim($setClause, ', ');
+        
+        $sql = "UPDATE $table_name SET " . $setClause . " WHERE id = :userID";
+        
+        try {
+            $this->link->beginTransaction();
+        
+            $stmt = $this->link->prepare($sql);
+        
+            foreach ($newUserData as $key => $value) {
+                if (array_key_exists($key, $newUserData)) {
+                    $stmt->bindValue(':' . $key, $value);
+                }
+            }
+            $stmt->bindValue(':userID', $userId);
+        
+            $stmt->execute();
+        
+            $this->link->commit();
+        } catch (\PDOException $e) {
+            $this->link->rollBack();
+            throw new \Exception( $e->getMessage());
+        }
+    }
+     public function selectUser(int $userId) {
+     $sql ='SELECT `nom`, `prenom`, `email`, `image`, `telephone`, `adressepostal`, `ville`, `codepostal`, `pays`, `linkedin`, `twitter`, `insta`, `fb` 
+     FROM users WHERE id = :id';
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute(['id' => $userId]);
+        $donn = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $donn;
+
+}  
+    public function getInterventionIDs() {
+        $sql = "SELECT interventionID FROM intervention";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
     
+    public function getDates() {
+        $sql = "SELECT date FROM intervention";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function getTitre() {
+        $sql = "SELECT titre FROM intervention";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function getHeure() {
+        $sql = "SELECT heure FROM intervention";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function getAdresse() {
+        $sql = "SELECT adresse FROM intervention";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function getClient() {
+        $sql = "SELECT intervention.clientID, users.nom AS client 
+                FROM intervention
+                LEFT JOIN users ON intervention.clientID = users.id";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getStand() {
+        $sql = "SELECT intervention.standID, users.nom AS stand
+                FROM intervention
+                LEFT JOIN users ON intervention.standID = users.id";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function getUrgence() {
+        $sql = "SELECT intervention.urgence_ID, urgence_deg.type_urgence AS type_urgence
+                FROM intervention
+                LEFT JOIN urgence_deg ON intervention.urgence_ID = urgence_deg.urgence_ID";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getStatut() {
+        $sql = "SELECT intervention.statutID, statut.typeStatut AS typeStatut
+                FROM intervention
+                LEFT JOIN statut ON intervention.statutID = statut.statutID";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function getUserID(){
+        $sql = "SELECT id FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserEmail(){
+        $sql = "SELECT email FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserNom(){
+        $sql = "SELECT nom FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserPrenom(){
+        $sql = "SELECT prenom FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserRole(){
+        $sql = "SELECT role FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserTel(){
+        $sql = "SELECT telephone FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserPays(){
+        $sql = "SELECT pays FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserVille(){
+        $sql = "SELECT ville FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserDate1(){
+        $sql = "SELECT created_at FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserDate2(){
+        $sql = "SELECT updated_at FROM users";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserIntervention(){
+        $sql = "SELECT intervention.interventionID
+                 FROM intervention 
+                 JOIN users ON intervention.clientID = users.id;";
+        $statement = $this->link->prepare($sql); 
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+        
 }

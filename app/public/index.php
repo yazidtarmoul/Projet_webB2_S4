@@ -23,7 +23,11 @@ if (isset($_POST['send'])) {
 
                 $msg = "Connecté";
                 $Page->session->add('User', $user);
-                header("Location: acceuil.php");
+                $Page->session->add('id', $user['id']);
+                
+
+                
+                header("Location: formprofile.php");
                 exit(); 
             }
         }

@@ -1,12 +1,16 @@
 <?php
 
 require_once '../vendor/autoload.php';
-
 use App\Page;
-
+use App\Session;
 $Page = new Page();
+$Session = new Session();
 $msg = null;
- $userId = $Page->session->get('id');
+
+
+
+$userId = $Page->session->get('id');
+ //var_dump($userId);
 if (isset($_POST['enregistrer'])) {
     $nom = $_POST['nom'] ?? '';
     $prenom = $_POST['prenom'] ?? '';
@@ -22,6 +26,7 @@ if (isset($_POST['enregistrer'])) {
     $insta = $_POST['insta'] ?? '';
     $fb = $_POST['fb'] ?? '';
     $userdonneesData = [
+        'id' => $userId,
         'nom' => $nom,
         'prenom' => $prenom,
         'email' => $mail,
@@ -34,12 +39,11 @@ if (isset($_POST['enregistrer'])) {
         'linkedin' => $linkedin,
         'twitter' => $twitter,
         'insta' => $insta,
-        'fb' => $fb,
-        'id'=> $userId
+        'fb' => $fb
     ];
 
     
-    $Page->update_user('users', $userdonneesData);
+    $Page->updateUser('users', $userdonneesData);
 
     header("Location: profile.php");
     exit;
