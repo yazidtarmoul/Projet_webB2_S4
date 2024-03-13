@@ -72,6 +72,7 @@ body {
 
   .contenu {
     flex: 1;
+    position: relative;
     padding: 20px;
     overflow: auto; 
   }
@@ -244,8 +245,8 @@ body {
     }
 #myForm {
     display: none;
-    position: absolute;
-    top: 50%;
+    position: absolute !important;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #f9f9f9;
@@ -253,7 +254,8 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 9999;
-    width: 300px; /* Ajuster la largeur au besoin */
+    width: 300px;
+    height:600px;
 }
 
 #myForm h2 {
@@ -268,7 +270,7 @@ body {
 
 #myForm input[type="text"],
 #myForm input[type="submit"] {
-    width: 100%; /* Les éléments d'entrée occupent toute la largeur */
+    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -286,8 +288,8 @@ body {
 }
 
 #closeFormButton {
-    margin-top: 20px;
-    padding: 10px 20px;
+    margin-top: 0px;
+    padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
@@ -303,13 +305,13 @@ body {
 <body>
   <header>
     <div class="conteneur-header">
-        <img class = "imgheader1"src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
+      <img src="img/logo.png" alt="Logo" class="logo">
       <h1 style = "font-size: 35px;">Tableau {% if action %}
                             {{ action }}
                         {% endif %} </h1>
       <div class="profil">
-        <a href ="logout.php"><img src="img/img_logout.png" alt="Paramètres" class="parametres"></a>
-        <a href ="profile.php"><img src="img/image 18.png" alt="Photo de profil" class="photo-profil"></a>
+        <img src="img/settings.png" alt="Paramètres" class="parametres">
+        <img src="img/image 18.png" alt="Photo de profil" class="photo-profil" >
         <p style="color: #FF0000;" class="nom-utilisateur">
           {% if NomPrenom %}
             {{ NomPrenom }}
@@ -327,8 +329,8 @@ body {
                     <ul class="sous-menu">
                         <li><a href="?action=utilisateurs">&nbsp;&nbsp;&nbsp;&nbsp; Utilisateurs</a></li>
                         <li><a href="?action=interventions">&nbsp;&nbsp;&nbsp;&nbsp; Interventions</a></li>
-                        <li><a href="?action=Intervenant-interventions">&nbsp;&nbsp;&nbsp;&nbsp; Pages</a></li>
-                        <li><a href="?action=urgence">&nbsp;&nbsp;&nbsp;&nbsp; Paramètres</a></li>
+                        <li><a href="?action=statut">&nbsp;&nbsp;&nbsp;&nbsp; statut</a></li>
+                        <li><a href="?action=urgence">&nbsp;&nbsp;&nbsp;&nbsp; urgence</a></li>
                     </ul>
                 </li>
             </ul>
@@ -338,7 +340,7 @@ body {
             <div class="action_bar">
                 <div class="action_1" id="btn_refresh">
                     <div class="action_content">
-                        <img src="img/image 18 (1).png" class="action_1img" style= "margin-right: 5px; max-width: 20%;">
+                        <img src="img/settings.png" class="action_1img" style= "margin-right: 5px; max-width: 20%;">
                         <div class="textaction1 custom-text">
                             <h1>Rafraîchire</h1>
                         </div>
@@ -347,17 +349,47 @@ body {
 
                 <div class="action_2" id="btn_add_user">
                     <div class="action_content">
-                        <img src="img/image 18 (1).png" class="action_2img" style= "margin-right: 5px; max-width: 13%;">
+                        <img src="img/settings.png" class="action_2img" style= "margin-right: 5px; max-width: 13%;" onclick=" showForm()">
                         <div class="textaction2 custom-text">
-                            <a href="?action=ajouter" ><h1>Ajouter un utilisateur</h1>
-                            </a>
+                           <h1>Ajouter {% if action %}
+                                            {{ action }}
+                                       {% endif %} </h1>
+                        <div id="myForm">
+                                <h2>Information</h2>
+                                <form id="profileForm" action="" method="post">
+                                    {% if action == 'interventions' %}
+                                        <input type="hidden" name="form_type" value="intervention">
+                                        <br><br><br><br><br><br><br><br><br><br><br><br>
+                                        <label for="titre" class="label-control">Titre:</label><br>
+                                        <input type="text" id="titre" name="titre" placeholder="Saisir titre" class="form-control"><br>
+                                        <label for="adresse" class="label-control">Adresse:</label><br>
+                                        <input type="text" id="adresse" name="adresse" placeholder="Saisir adresse" class="form-control"><br>
+                                        <label for="ID_client" class="label-control">ID Client:</label><br>
+                                        <input type="text" id="ID_client" name="ID_client" placeholder="Saisir ID client" class="form-control"><br>
+                                    {% elseif  action == 'utilisateurs'%}
+                                        <input type="hidden" name="form_type" value="user">
+                                        <br><br><br><br><br><br><br><br><br><br><br><br>
+                                        <label for="email" class="label-control">Email:</label><br>
+                                        <input type="text" id="email" name="email" placeholder="Saisir email" class="form-control"><br>
+                                        <label for="firstName" class="label-control">Prénom:</label><br>
+                                        <input type="text" id="firstName" name="firstName" placeholder="Saisir nom" class="form-control"><br>
+                                        <label for="lastName" class="label-control">Nom:</label><br>
+                                        <input type="text" id="lastName" name="lastName" placeholder="Saisir prenom" class="form-control"><br>
+                                        <label for="password" class="label-control">Mot de passe:</label><br>
+                                        <input type="text" id="password" name="password" placeholder="Saisir mot de passe" class="form-control"><br>
+                                    {% endif %}
+                                    <input type="submit" name="send" value="Enregistrer" onclick="closeReset()">
+                                    <button id="closeFormButton" type="button" onclick="closeReset()">Fermer</button>
+                                </form>
+                                <br>  
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="action_3" id="btn_delete_user">
                     <div class="action_content">
-                        <img src="img/image 18 (1).png" class="action_3img" style= "margin-right: 5px; max-width: 12%;">
+                        <img src="img/settings.png" class="action_3img" style= "margin-right: 5px; max-width: 12%;">
                         <div class="textaction3 custom-text">
                             <h1>Supprimer un utilisateur</h1>
                         </div>
@@ -394,7 +426,9 @@ body {
                                 {% for index in range(0, tableData['interventionIDs']|length-1) %}
                                     <tr>
                                         <td>
-                                            <img src="img/image 18 (1).png" alt="actions{{ index }}" class="action">
+                                            <a href="?action=supprimer&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID">
+                                            <img src="img/poubelle.png" alt="" class="action" data-id="{{ tableData['UserID'][index]['UserID'] }}">
+                                        </a>
                                         </td>
                                         <td>{{ tableData['interventionIDs'][index]['interventionID'] }}</td>
                                         <td>{{ tableData['dates'][index]['date'] }}</td>
@@ -411,7 +445,9 @@ body {
                                 {% for index in range(0, tableData['UserID']|length-1) %}
                                     <tr>
                                         <td>
-                                            <img src="img/image 18 (1).png" alt="actions{{ index }}" class="action">
+                                         <a href="?action=supprimer&id={{ tableData['UserID'][index]['UserID'] }}&tbname=User&colname=UserID">
+                                            <img src="img/poubelle.png" alt="" class="action" data-id="{{ tableData['UserID'][index]['UserID'] }}">
+                                        </a>
                                         </td>
                                         <td>{{ tableData['UserID'][index]['UserID'] }}</td>
                                         <td>{{ tableData['UserEmail'][index]['email'] is null ? 'N/A' : tableData['UserEmail'][index]['email'] }}</td>
@@ -425,8 +461,21 @@ body {
                                         <td>{{ tableData['UserUpdated'][index]['updated_at'] }}</td>
                                         <td>{{ tableData['UserIntervention'][index]['interventionID'] }}</td>
                                     </tr>
+                                     
                                 {% endfor %}
-                            {% endif %}
+                                {% elseif action == 'statut' %}
+                                        {% for statut in tableData.statut %}
+                                            <tr>
+                                                <td>
+                                                 <a href="?action=supprimer&id={{ statut.statutID }}&tbname=statut&colname=statutID">
+                                                    <img src="img/poubelle.png" alt="" class="action" data-id="{{ statut.statutID }}">
+                                                </a>
+                                                </td>
+                                                <td>{{ statut.statutID }}</td>
+                                                <td>{{ statut.typeStatut }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
                         </tbody>
                     </table>
                     <div id="overlay"></div>
@@ -437,13 +486,15 @@ body {
 
 
 <script>
+
     function showForm() {
         document.getElementById('myForm').style.display = 'block';
     }
-    
-    function closeForm() {
+    function closeReset() {
         document.getElementById('myForm').style.display = 'none';
+        document.getElementById("myForm").reset();
     }
+    
 (function() {
     document.addEventListener("DOMContentLoaded", function() {
         var toggleMenus = document.querySelectorAll('.toggle-menu');
@@ -496,9 +547,7 @@ body {
             location.reload();
         });
 
-        btnAddUser.addEventListener("click", function() {
-            alert("test ");
-        });
+        
 
         btnDeleteUser.addEventListener("click", function() {
             alert("test");
@@ -516,7 +565,7 @@ body {
             var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
             table = document.getElementById("tableau");
             switching = true;
-            dir = "asc"; // Set the sorting direction to ascending by default
+            dir = "asc"; 
             while (switching) {
                 switching = false;
                 rows = table.rows;
@@ -561,6 +610,7 @@ body {
             });
         });
     });
+    
 })();
 </script>
 
@@ -568,3 +618,6 @@ body {
 
 </body>
 {% endblock %}
+
+
+
