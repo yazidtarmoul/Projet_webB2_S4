@@ -22,6 +22,11 @@ switch ($action) {
         $colname = $_GET['colname'];
         $page->delete($id, $tablename ,$colname);
         $action = $tablename;
+        if ($tablename == "users"){
+            $action = 'utilisateurs';
+        }
+        //var_dump($tablename);
+        header("Location: admin.php?action=".$tablename);    
         break;
     case 'interventions':
         $tableData = [
@@ -33,7 +38,8 @@ switch ($action) {
             'client' => $page->getClient(),
             'stand' => $page->getStand(),
             'urgence' => $page->getUrgence(),
-            'statut' => $page->getStatut()
+            'statut' => $page->getStatut(),
+            'intervenant'=>$page->intervenantIntervention()
         ];
         //var_dump($tableData);
 
@@ -59,11 +65,17 @@ switch ($action) {
         $allStatut = $page->getAllStatus();
         //var_dump($allStatut);
         $tableData = [
-            'statut'=>$page->getAllStatus()
+            'statut'=>$page->getAllStatus();
         ];
         //print($allStatut['typeStatut']);
         break;
-
+    case 'urgence_deg':
+        $allUrgence = $page->getAllUrgence();
+        $tableData = [
+            'urgence_deg'=>$allUrgence
+        ];
+        //var_dump($tableData);
+        break;
 
     default:
         break;
@@ -104,6 +116,9 @@ if (!empty($tableData)) {
 }
 if ($action == 'statut'){
     $columnNames = ['statutID', 'typeStatut']; 
+}
+if ($action == 'urgence_deg'){
+    $columnNames = ['urgence_ID', 'typeStatut']; 
 }
 
 echo $page->render('admin/admin.html.twig', [
