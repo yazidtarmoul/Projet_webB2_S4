@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+{% block imgurl %}WhatsApp Image 2024-03-11 à 12.23.21_d5860a9a.jpg{% endblock %}
+
+{% block content %}
+    {% if msg %}
+    <div class="messagebox">{{msg}}</div>
+    {% endif %}
+    <div>
+        <header class = "header">
+         <a href="acceuil.php"></a><img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie "></a>
+         <a href="logout.php"><img class ="imgheader2"src="img/img_logout.png" alt="Logo paramètre " ></a>
+         <a href="profile.php"><img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" ></a>
+     </header>
+     <main class="card-body">
+        <form action="" method="Post">
+            <div class="form-floating top-50">
+                <textarea class="form-control" placeholder="Leave a comment here" id="Commentaire" name="Commentaire" style="height: 200px"></textarea>
+                <label for="Commentaire">Comments</label>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <input type="Submit" class="btn btn-dark" id="Send" name="Send" value="Send">
+                </div>
+             </div> 
+        </form>   
+    </div>
+</main>
+
+{% endblock %}

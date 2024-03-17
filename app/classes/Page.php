@@ -42,7 +42,7 @@ class Page
     
     public function insert_form(string $table_name, array $data) {
         if ($this->link) {
-            $sql = "INSERT INTO ".$table_name ." (titre, date, heure, adresse, codepostal, ville, pays, urgence_ID) VALUES (:titre, :date, :heure, :adresse, :codepostal, :ville, :pays, :urgence_ID)";   
+            $sql = "INSERT INTO ".$table_name ." (titre, date, heure, adresse, codepostal, ville, pays, urgence_ID, statutID) VALUES (:titre, :date, :heure, :adresse, :codepostal, :ville, :pays, :urgence_ID, :statutID)";   
             $stmt = $this->link->prepare($sql);
             $stmt->bindParam(":titre", $data["titre"]);
             $stmt->bindParam(":date", $data["date"]);
@@ -51,6 +51,7 @@ class Page
             $stmt->bindParam(":codepostal", $data["codepostal"]);
             $stmt->bindParam(":ville", $data["ville"]);
             $stmt->bindParam(":pays", $data["pays"]);
+            $stmt->bindParam(":statutID", $data["statutID"]);
             $stmt->bindParam(":urgence_ID", $data["urgence_ID"]);
     
             try {
@@ -75,6 +76,14 @@ class Page
                 throw new \Exception($e->getMessage());
             }
         }
+    }
+    public function selectidstatuttype(String $statutid){
+        $sql1 = "SELECT statutID FROM statut where typeStatut=:Typec";
+        $stmt1 = $this->link->prepare($sql1);
+        $stmt1->execute(['Typec' => $statutid]);
+        $type = $stmt1->fetch(\PDO::FETCH_ASSOC);
+        return $type;
+
     }
     
     //Pour formprofile et page profile
@@ -101,9 +110,14 @@ class Page
         
             foreach ($newUserData as $key => $value) {
                 if (array_key_exists($key, $newUserData)) {
-                    $stmt->bindValue(':' . $key, $value);
+                    if ($key !== 'image') { // Si ce n'est pas l'image, liez normalement
+                        $stmt->bindValue(':' . $key, $value);
+                    } else { // Si c'est l'image, liez le nom de l'image
+                        $stmt->bindValue(':image', $value['name']);
+                    }
                 }
             }
+            
             $stmt->bindValue(':userID', $userId);
         
             $stmt->execute();
@@ -114,16 +128,80 @@ class Page
             throw new \Exception( $e->getMessage());
         }
     }
-     public function selectUser(int $userId) {
-     $sql ='SELECT `nom`, `prenom`, `email`, `image`, `telephone`, `adressepostal`, `ville`, `codepostal`, `pays`, `linkedin`, `twitter`, `insta`, `fb` 
-     FROM users WHERE id = :id';
+    public function selectUser(int $userId) {
+        $sql ='SELECT `nom`, `prenom`, `email`, `image`,`sexe`, `telephone`, `adressepostal`, `ville`, `codepostal`, `pays`, `linkedin`, `twitter`, `insta`, `fb` 
+        FROM users WHERE id = :id';
+           $stmt = $this->link->prepare($sql);
+           $stmt->execute(['id' => $userId]);
+           $donn = $stmt->fetch(\PDO::FETCH_ASSOC);
+           return $donn;
+       }
+       
+    
+    public function getAllStatus(){
+        $sql = 'SELECT * FROM statut';
         $stmt = $this->link->prepare($sql);
-        $stmt->execute(['id' => $userId]);
-        $donn = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $donn;
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function selectIntervention(int $userId) {
+           $sql = 'SELECT `interventionID`, `titre`, `date`, `heure`, `adresse`, `codepostal`, `codepostal`, `ville`, `codepostal`,`pays`
+           FROM intervention WHERE interventionID = :id';
+           $stmt = $this->link->prepare($sql);
+           $stmt->execute(['id'=> $userId]);
+           $donn = $stmt->fetch(\PDO::FETCH_ASSOC);
+           return $donn;
+    } 
+    public function selecturgencedeg_intervention(int $userId){
+        $sql = "SELECT intervention.urgence_ID , urgence_deg.type_urgence AS type_urgence, urgence_deg.description AS description FROM intervention LEFT JOIN urgence_deg ON  urgence_deg.urgence_ID = intervention.urgence_ID WHERE intervention.interventionID =:id ";
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute(['id'=> $userId]);
+        $urgdeg = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $urgdeg;
+    }  
+    
+    public function selctstatut_interv(int $userId) {
+        $sql="SELECT intervention.statutID, statut.typeStatut AS typeStatut
+        FROM intervention
+        LEFT JOIN statut ON intervention.statutID = statut.statutID
+        WHERE intervention.interventionID =:id";
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute(["id"=> $userId]);
+        $statut = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $statut;
+    }
+    public function selctcmntr_interv(int $userId){
+        $sql= "SELECT texte FROM commentaire  WHERE commentaire.interventionID = :id";
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute(["id"=> $userId]);
+        $comment = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $comment;
+    }
+    public function insert_cmnt(string $table_name, array $data) {
+        if ($this->link) {
+        $sql = "INSERT INTO " . $table_name . "(texte,interventionID) values (:commentaire, :id)";
+        $stmt = $this->link->prepare($sql);
+        $stmt->bindParam("commentaire", $data["commentaire"]);
+        $stmt->bindParam("id", $data["id"]);
+        try{
+            $stmt->execute();
 
-}  
-    public function getInterventionIDs() {
+        }catch( \PDOException $e){
+              throw new \Exception($e->getMessage());
+        }
+    }
+}
+       
+    public function delete(int $id, String $table_name, String $colname){
+        $sql = "DELETE FROM ".$table_name." WHERE ".$colname."= :id";
+        $stmt = $this->link->prepare($sql);
+        try {
+            $stmt->execute(['id' => $id]);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+     public function getInterventionIDs() {
         $sql = "SELECT interventionID FROM intervention";
         $statement = $this->link->prepare($sql); 
         $statement->execute();
@@ -136,7 +214,7 @@ class Page
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
-    
+ 
     public function getTitre() {
         $sql = "SELECT titre FROM intervention";
         $statement = $this->link->prepare($sql); 

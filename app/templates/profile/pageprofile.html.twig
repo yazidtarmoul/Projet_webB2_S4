@@ -15,11 +15,16 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="{{ image }}" alt="Admin" class="rounded-circle" width="150">
+                        {% if sexe == "Homme" %}
+                            <img src="img/male-avatar-portrait-of-a-young-man-with-a-beard-illustration-of-male-character-in-modern-color-style-vector.jpg" alt="Femme" class="rounded-circle" width="150">
+
+                        {% else %}
+                             <img src="img/2002257-belle-femme-avatar-personnage-icone-gratuit-vectoriel.jpg" alt="Homme" class="rounded-circle" width="150">
+                        {% endif %}
                     <div class="mt-3">
                       <h4>{{nom}} {{prenom}}</h4>
                       <p class="text-secondary mb-1">{{nom}} {{prenom}}</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                      <p class="text-muted font-size-sm">{{sexe}}</p>
                     </div>
                   </div>
                 </div>
@@ -113,25 +118,33 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="formprofile.php">Edit</a>
+                  
+                       <a href="Edit.php?action=edit"><button class="btn btn-info" name="edit" id="edit">Edit</button></a>
                     </div>
+
+        
+
                   </div>
                 </div>
               </div>
-
+              <a href="admin.php" alt="Intervention"><h1 class="text-dark">Interventions:</h1></a>
               <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                        <h1>intervention</h1>
-                      </div>
-                    </div>
+                       <p><strong>ID:</strong></p>
+                       <p><strong>Titre:</strong></p>
+                       <p><strong>Date:</strong></p>
+                     </div>
                   </div>
                 </div>
+              </div>
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                      <P>AZUL</p>
+                       <p><strong>ID:</strong></p>
+                       <p><strong>Titre:</strong></p>
+                       <p><strong>Date:</strong></p>
                     </div>
                     </div>
                   </div>

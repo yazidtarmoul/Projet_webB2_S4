@@ -29,7 +29,7 @@ class Session
     function isConnected()
     {   
         
-        return isset($_SESSION['user']);
+        return isset($_SESSION['User']);
     }
     public function hasRole(string $role)
     {
@@ -41,5 +41,18 @@ class Session
             return false;
         }*/
         return $_SESSION['user']['role'] == $role ? true : false;
+    }
+    public function getPrenom(){
+        if (!$this->isConnected()){
+            return false;
+        }
+        return $_SESSION['User']['prenom'];
+    }
+
+    public function getNom(){
+        if (!$this->isConnected()){
+            return false;
+        }
+        return $_SESSION['User']['nom'];
     }
 }

@@ -1,15 +1,20 @@
 <?php
-
 require_once '../vendor/autoload.php';
+
 use App\Page;
-use App\Session;
-$Page = new Page();
-$Session = new Session();
-$msg = null;
 
+$page = new Page();
+$userId = $page->session->get('id');
+$donn = $page->selectUser($userId);
 
-$userId = $Page->session->get('id');
- //var_dump($userId);
+/*$action = $_GET['action'] ?? '';
+if ($action == 'edit') {
+    
+
+     header('Location: formprofile.php');
+     exit();
+}*/
+
 if (isset($_POST['enregistrer'])) {
     $nom = $_POST['nom'] ?? '';
     $prenom = $_POST['prenom'] ?? '';
@@ -26,8 +31,6 @@ if (isset($_POST['enregistrer'])) {
     $insta = $_POST['insta'] ?? '';
     $fb = $_POST['fb'] ?? '';
 
-   
-            
     $userdonneesData = [
         'id' => $userId,
         'nom' => $nom,
@@ -47,11 +50,24 @@ if (isset($_POST['enregistrer'])) {
     ];
 
     
-    $Page->updateUser('users', $userdonneesData);
+    $page->updateUser('users', $userdonneesData);
 
     header("Location: profile.php");
     exit;
 }
 
-// Render formprofile.html.twig
-echo $Page->render('profile/formprofile.html.twig', ["msg" => $msg]);
+echo $page->render('profile/formprofile.html.twig', [
+    "nom" => $donn['nom'],
+    "prenom" => $donn['prenom'],
+    "email" => $donn['email'],
+    "image" => $donn['image'], 
+    "telephone" => $donn['telephone'],
+    "adresse_post" => $donn['adressepostal'],
+    "ville" => $donn['ville'],
+    "codepostal" => $donn['codepostal'],
+    "pays" => $donn['pays'],
+    "linkedin" => $donn['linkedin'],
+    "twitter" => $donn['twitter'],
+    "insta" => $donn['insta'],
+    "fb" => $donn['fb']
+]);

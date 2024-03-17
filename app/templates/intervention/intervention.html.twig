@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+{% block imgurl %}WhatsApp Image 2024-03-11 à 12.23.21_d5860a9a.jpg{% endblock %}
+
+{% block content %}
+    {% if msg %}
+    <div class="messagebox">{{msg}}</div>
+    {% endif %}
+   
+<div>
+   <header class = "header">
+    <a href="acceuil.php"></a><img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie "></a>
+    <a href="logout.php"><img class ="imgheader2"src="img/img_logout.png" alt="Logo paramètre " ></a>
+    <a href="profile.php"><img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" ></a>
+</header>
+<main class="card-body">
+    <div class="row intervention-info rounded-4">
+        <h1 class="text-center"><strong>Informations d'intervention</strong></h1>
+            <div class="row g-2 mt-5">
+               <div class="col-sm-3">
+                   <p><strong>ID Intervention: {{idintervention}} </strong></p>
+               </div>
+               <div class="col-sm">
+                    <p><strong>Titre d'intervention:  {{titre}}</strong></p>
+               </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm">
+                    <p><strong>Date: {{date}} </strong></p>
+                </div>
+                <div class="col-sm">
+                    <p><strong>Heure:   {{heure}}</strong></p>
+                </div>
+                <div class="col-sm">
+                    <p><strong>Adresse:  {{adresse}}, {{ville}}, {{codepostal}}, {{pays}}</strong></p>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md">
+                    <p><strong>Degré d'urgence: {{urgence}}</strong></p>
+                </div>
+                <div class="col-md">
+                    <p><strong>Statut:   {{    statut}}</strong></p>
+                </div>
+            </div>
+            <div class="row g-3">
+                 <p><strong>Description du problème:</strong></p>
+                 <textarea disabled class="form-control"  cols="30" rows="10"> {{description}}</textarea>
+            </div>
+            <div class="row g-3">
+                <p><strong>Commentaires:</strong></p>
+                <textarea disabled class="form-control" cols="20" rows="10">{% for comment in comments %}
+   
+                *** {{ comment }}
+                {% endfor %}</textarea>
+            </div>
+    </div>
+</main>
+
+{% endblock %}

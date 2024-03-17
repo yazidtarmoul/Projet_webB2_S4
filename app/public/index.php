@@ -2,11 +2,10 @@
 
 require_once '../vendor/autoload.php';
 use App\Page;
-use App\Session;
-$Page = new Page();
-$Session = new Session();
-$msg = null;
 
+$Page = new Page();
+
+$msg = null;
 if (isset($_POST['send'])) {
     //var_dump($_POST);
 
@@ -24,10 +23,9 @@ if (isset($_POST['send'])) {
                 $msg = "Connecté";
                 $Page->session->add('User', $user);
                 $Page->session->add('id', $user['id']);
-                
 
                 
-                header("Location: formprofile.php");
+                header("Location: Edit.php");
                 exit(); 
             }
         }
@@ -37,7 +35,7 @@ if (isset($_POST['send'])) {
     
 }
 
-if($Session->isConnected())
+if($Page->session->isConnected() &&  $Page->session->isConnected()=== true)
 { 
     header("Location: acceuil.php");
     exit();

@@ -6,9 +6,9 @@
     <a href="profile.php"><img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" ></a>
 </header>
 <main>
-   <form action="" method="post" class="row g-3 form_prof rounded-4">
+   <form action="" method="post" class="row g-3 form_prof rounded-4" enctype="multipart/form-data">
         <div class="card-body">
-            <h1 class="h1 mb-3 text-center"><strong>Compléter vos informations </strong></h1>
+            <h1 class="h1 mb-3 text-center"><strong>Compléter vos informations</strong></h1>
                 <div class="row g-3 mb-3 mt-3">
                     <div class="col sm">
                         <label for="nom" class="form-label">Nom:</label>
@@ -16,7 +16,8 @@
                                     id="nom"
                                     name="nom"
                                     class="form-control"
-                                    required="required">
+                                    required="required"
+                                    value="{{nom}}">
                     </div>
                 
                     <div class="col sm">
@@ -25,7 +26,8 @@
                                     id="prenom"
                                     name="prenom"
                                     class="form-control"
-                                    required="required">
+                                    required="required"
+                                    value="{{prenom}}">
             
                     </div>
                 </div> 
@@ -36,7 +38,8 @@
                                    name="mail"
                                    id="mail"
                                    class="form-control"
-                                   required="required">
+                                   required="required"
+                                   value="{{email}}">
                     </div>
                     <div class="col-sm">
                         <label for="telephone" class="form-label">Téléphone:</label>
@@ -44,7 +47,8 @@
                                name="telephone"
                                id="telephone"
                                class="form-control"
-                               required="required">
+                               required="required"
+                               value="{{telephone}}">
                     </div>
                 </div>                
                 <div class="row g-2 mb-3">
@@ -54,7 +58,8 @@
                                name="adresse_post"
                                id="adresse_post"
                                class="form-control"
-                               required="required">
+                               required="required"
+                               value="{{adresse_post}}">
                     </div>
                     <div class="col-sm">
                         <label for="ville" class="form-label">Ville :</label>
@@ -62,7 +67,8 @@
                                name="ville"
                                id="ville"
                                class="form-control"
-                               required="required">
+                               required="required"
+                               value="{{ville}}">
                     </div>
                     <div class="col-sm">
                         <label for="codepostal" class="form-label">Code Postal :</label>
@@ -70,7 +76,8 @@
                                name="codepostal"
                                id="codepostal"
                                class="form-control"
-                               required="required">
+                               required="required"
+                               value="{{codepostal}}">
                     </div>
                 </div>
                 <div class="row g-2 mb-3">
@@ -80,7 +87,9 @@
                                    name="pays"
                                    id="pays"
                                    class="form-control"
-                                   required="required">
+                                   value="{{pays}}"
+                                   required="required"
+                                   value="{{pays}}">
                     </div>
                     <div class="col-sm">
                         <label for="image" class="form-label">Entrer une image: </label>
@@ -88,7 +97,15 @@
                                 type="file" 
                                 id="image"
                                 name="image"
-                                required="required">
+                                value="{{image}}">
+                    </div>
+                    <div class="col-sm">
+                        <label for="sexe" class="form-label">Sexe: </label>
+                        <select class="form-select" name="sexe" id="sexe" aria-label="Default select example"  required="required">
+                            <option selected>Open this select menu</option>
+                            <option value="Homme">Homme</option>
+                            <option value="Femme">Femme</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row g-2 mb-6">
@@ -97,33 +114,37 @@
                             <input type="text" 
                                    name="linkedin"
                                    id="linkedin"
-                                   class="form-control">
+                                   class="form-control"
+                                   value="{{linkedin}}">
                     </div>
                     <div class="col-sm">
                         <label for="twitter" class="form-label">Twitter(facultatif):</label>
                         <input type="text" 
                                name="twitter"
                                id="twitter"
-                               class="form-control">
+                               class="form-control"
+                               value="{{twitter}}">
                     </div>
                     <div class="col-sm">
                         <label for="insta" class="form-label">Instagram(facultatif):</label>
                         <input type="text" 
                                name="insta"
                                id="insta"
-                               class="form-control">
+                               class="form-control"
+                               value="{{insta}}">
                     </div>
                     <div class="col-sm">
                         <label for="fb" class="form-label">Facebook(facultatif):</label>
                         <input type="text" 
                                name="fb"
                                id="fb"
-                               class="form-control">
+                               class="form-control"
+                               value="{{fb}}">
                     </div>
                     
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3 ">
-                        <input type="submit" class="btn btn-dark me-md-2" value="Modifier">
+                        <input type="submit" class="btn btn-dark me-md-2" name="enregistrer" value="Modifier">
                         <input type="submit" class="btn btn-dark" name="enregistrer" id="enregistrer" value="Enregistrer">
                 </div>
         </div>

@@ -3,7 +3,7 @@
     require_once '../vendor/autoload.php';
 
     use App\Page;
-    $msg = NULL;
+    $msg1 = NULL;
     
     $Page = new Page();
     if(isset($_POST['send'])){
@@ -22,5 +22,5 @@
     }
 }
 
-    echo $Page->render('register.html.twig', ["msg" => $msg]);
+    echo $Page->render('register.html.twig', ["msg1" => $msg1]);
 ?>

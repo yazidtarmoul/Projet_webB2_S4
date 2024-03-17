@@ -3,10 +3,19 @@
 require_once '../vendor/autoload.php';
 
 use App\Page;
-use App\Session;
-$Page = new Page();
-$Session = new Session();
+
+$page = new Page();
 $msg = null;
 
-echo $Page->render('acceuil.html.twig', ["msg" => $msg]);
+
+if (!$page->session->isConnected()) {
+    header("Location: index.php");
+    exit();
+}
+
+$userId = $page->session->get('id');
+$donn = $page->selectUser($userId);
+
+echo $page->render('acceuil.html.twig', ['nom'=> $donn['nom'],
+                                         'prenom'=>$donn['prenom']]);
 
