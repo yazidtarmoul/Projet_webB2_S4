@@ -374,7 +374,7 @@ class Page
     public function intervenantIntervention() {   
         $sql = "SELECT i.interventionID, GROUP_CONCAT(CONCAT(u.nom, ' ', u.prenom)) as users 
                 FROM intervenant i 
-                JOIN User u ON i.UserID = u.UserID GROUP BY i.interventionID;";
+                JOIN users u ON i.UserID = u.UserID GROUP BY i.interventionID;";
     
         $stmt = $this->link->prepare($sql);
         try {
