@@ -55,4 +55,10 @@ class Session
         }
         return $_SESSION['User']['nom'];
     }
+        public function getID(){
+        if (!$this->isConnected()){
+            return false;
+        }
+        return $_SESSION['User']['UserID'];
+    }
 }
