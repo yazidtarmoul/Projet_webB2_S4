@@ -146,8 +146,8 @@ body {
     cursor: pointer;
     padding: 5px 10px;
    /* background-color: #ccc;*/
-    /border: 1px solid #999;/
-    /border-radius: 4px;/
+    /*border: 1px solid #999;*/
+    /*border-radius: 4px;*/
     display: inline-block;
   }
 
@@ -162,7 +162,7 @@ body {
   .sous-menu.active {
     display: block;
   }
-  /fin menu/
+  /*fin menu*/
 
   .action {
     width: 18px;
@@ -328,9 +328,9 @@ body {
                     <div class="menu-button">Options <span class="fleche">&#9660;</span></div>
                     <ul class="sous-menu">
                         <li><a href="?action=utilisateurs">&nbsp;&nbsp;&nbsp;&nbsp; Utilisateurs</a></li>
-                        <li><a href="?action=interventions">&nbsp;&nbsp;&nbsp;&nbsp; Interventions</a></li>
+                        <li><a href="?action=intervention">&nbsp;&nbsp;&nbsp;&nbsp; Interventions</a></li>
                         <li><a href="?action=statut">&nbsp;&nbsp;&nbsp;&nbsp; statut</a></li>
-                        <li><a href="?action=urgence">&nbsp;&nbsp;&nbsp;&nbsp; urgence</a></li>
+                        <li><a href="?action=urgence_deg">&nbsp;&nbsp;&nbsp;&nbsp; urgence</a></li>
                     </ul>
                 </li>
             </ul>
@@ -357,7 +357,7 @@ body {
                         <div id="myForm">
                                 <h2>Information</h2>
                                 <form id="profileForm" action="" method="post">
-                                    {% if action == 'interventions' %}
+                                    {% if action == 'intervention' %}
                                         <input type="hidden" name="form_type" value="intervention">
                                         <br><br><br><br><br><br><br><br><br><br><br><br>
                                         <label for="titre" class="label-control">Titre:</label><br>
@@ -387,14 +387,6 @@ body {
                     </div>
                 </div>
 
-                <div class="action_3" id="btn_delete_user">
-                    <div class="action_content">
-                        <img src="img/settings.png" class="action_3img" style= "margin-right: 5px; max-width: 12%;">
-                        <div class="textaction3 custom-text">
-                            <h1>Supprimer un utilisateur</h1>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="my-3 d-flex align-items-center">
             
@@ -407,8 +399,8 @@ body {
                     </select>
                     <input type="text" id="inputFilter" class="form-control custom-input-width me-2">
                 </div>
-                <button id="filterButton" class="btn btn-primary">Filtrer</button>
-                <button id="triButton" class="btn btn-primary" style ="margin-left: 10px;">Tri croissant</button>
+                <button id="filterButton" class="btn btn-outline-success">Filtrer</button>
+                <button id="triButton" class="btn btn-outline-success" style ="margin-left: 10px;">Tri croissant</button>
             </div>
                 <div class="table-responsive" style="max-height: 400px;">
                     <table class="table table-striped table-hover" id="tableau">
@@ -418,25 +410,20 @@ body {
                                 {% for index, columnName in columnNames %}
                                     <th style="background-color:#A1BA6B;" class="sortable" data-column="{{ index }}">{{ columnName }}</th>
                                 {% endfor %}
-                                   <th style="background-color:#A1BA6B;">Commentaires</th>
-                                <th style="background-color:#A1BA6B;">Show</th>
+                                
                             </tr>
-
                         </thead>
                         <tbody>
-                            {% if action == 'interventions' %}
+                            {% if action == 'intervention' %}
                                 {% for index in range(0, tableData['interventionIDs']|length-1) %}
-                                
                                     <tr>
-                            
-                                
                                         <td>
-                                            <a href="?action=supprimer&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID">
-                                            <img src="img/poubelle.png" alt="" class="action imgcmntr" data-id="{{ tableData['UserID'][index]['UserID'] }}">
-                                             </a>
-                                             <a href="form_intervention.php?action=&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID">
+                                            <a href="?action=supprimer&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID" class="suppression-link">
+                                            <img src="img/poubelle.png" alt="" class="action" data-id="{{ tableData['UserID'][index]['UserID'] }}">
+                                            </a>
+                                             <a href = "#">
                                              <img src="img/img_modif.png" alt="" class="action" data-id="">
-                                            </a> 
+                                             </a>
                                         </td>
     
                                         <td>{{ tableData['interventionIDs'][index]['interventionID'] }}</td>
@@ -448,25 +435,28 @@ body {
                                         <td>{{ tableData['stand'][index]['stand'] is null ? 'N/A' : tableData['stand'][index]['stand'] }}</td>
                                         <td>{{ tableData['urgence'][index]['type_urgence'] is null ? 'N/A' : tableData['urgence'][index]['type_urgence'] }}</td>
                                         <td>{{ tableData['statut'][index]['typeStatut'] is null ? 'N/A' : tableData['statut'][index]['typeStatut'] }}</td>
-                                        <td> <a href="comments.php?action=&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID">
-                                             <img src="img/cmntr.png" alt="" class="action imgcmntr" data-id="">
-                                            </a></td>
-                                            <td>
-                                         <a href="Intervention.php?action=&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID">
-                                             <img src="img/345744-200.png" alt="" class="action imgcmntr" data-id="">
-                                            </a> </td>
+                                        <td>
+                                            {% set users = tableData['intervenant'][index]['users'] %}
+                                            {% if users is defined %}
+                                                {{ users }}
+                                            {% else %}
+                                                Aucun utilisateur
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             {% elseif action == 'utilisateurs' %}
                                 {% for index in range(0, tableData['UserID']|length-1) %}
                                     <tr>
                                         <td>
-                                         <a href="?action=supprimer&id={{ tableData['id'][index]['id'] }}&tbname=User&colname=UserID">
-                                            <img src="img/poubelle.png" alt="" class="action imgcmntr" data-id="{{ tableData['id'][index]['id'] }}">
+                                         <a href="?action=supprimer&id={{ tableData['UserID'][index]['UserID'] }}&tbname=User&colname=UserID" class="suppression-link">
+                                            <img src="img/poubelle.png" alt="" class="action" data-id="{{ tableData['UserID'][index]['UserID'] }}">
                                         </a>
+                                        <a href = "userInfo.php?id={{ tableData['UserID'][index]['UserID'] }}">
                                         <img src="img/img_modif.png" alt="" class="action" data-id="">
+                                        </a>
                                         </td>
-                                        <td>{{ tableData['id'][index]['id'] }}</td>
+                                        <td>{{ tableData['UserID'][index]['UserID'] }}</td>
                                         <td>{{ tableData['UserEmail'][index]['email'] is null ? 'N/A' : tableData['UserEmail'][index]['email'] }}</td>
                                         <td>{{ tableData['UserNom'][index]['nom'] is null ? 'N/A' : tableData['UserNom'][index]['nom'] }}</td>
                                         <td>{{ tableData['UserPrenom'][index]['prenom'] is null ? 'N/A' : tableData['UserPrenom'][index]['prenom'] }}</td>
@@ -476,7 +466,14 @@ body {
                                         <td>{{ tableData['UserVille'][index]['ville'] is null ? 'N/A' : tableData['UserVille'][index]['ville'] }}</td>
                                         <td>{{ tableData['UserCreated'][index]['created_at'] }}</td>
                                         <td>{{ tableData['UserUpdated'][index]['updated_at'] }}</td>
-                                        <td>{{ tableData['UserIntervention'][index]['interventionID'] }}</td>
+                                         <td>
+                                            {% for intervention in tableData['UserIntervention'] %}
+                                                {% if intervention['clientID'] == tableData['UserID'][index]['UserID'] %}
+                                                    {{ intervention['titres_intervention'] }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+
                                     </tr>
                                      
                                 {% endfor %}
@@ -484,8 +481,8 @@ body {
                                         {% for statut in tableData.statut %}
                                             <tr>
                                                 <td>
-                                                 <a href="?action=supprimer&id={{ statut.statutID }}&tbname=statut&colname=statutID">
-                                                    <img src="img/poubelle.png " alt="" class="action imgcmntr" data-id="{{ statut.statutID }}">
+                                                 <a href="?action=supprimer&id={{ statut.statutID }}&tbname=statut&colname=statutID" class="suppression-link">
+                                                    <img src="img/poubelle.png" alt="" class="action" data-id="{{ statut.statutID }}">
                                                 </a>
                                                 <img src="img/img_modif.png" alt="" class="action" data-id="" >
                                                 </td>
@@ -493,10 +490,23 @@ body {
                                                 <td>{{ statut.typeStatut }}</td>
                                             </tr>
                                         {% endfor %}
-                                    {% endif %}
+                                {% elseif action == 'urgence_deg' %}
+                                        {% for urgence_deg in tableData.urgence_deg %}
+                                            <tr>
+                                                <td>
+                                                <a href="?action=supprimer&id={{ urgence_deg.urgence_ID }}&tbname=urgence_deg&colname=urgence_ID" class="suppression-link">
+                                                    <img src="img/poubelle.png" alt="" class="action" data-id="{{ urgence_deg.urgence_ID }}">
+                                                </a>
+                                                <img src="img/img_modif.png" alt="" class="action" data-id="" >
+                                                </td>
+                                                <td>{{ urgence_deg.urgence_ID }}</td>
+                                                <td>{{ urgence_deg.type_urgence }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                {% endif %}
                         </tbody>
                     </table>
-                    
+                    <div id="overlay"></div>
                 </div>
         </section>
     </div>
@@ -504,7 +514,8 @@ body {
 
 
 <script>
-function showForm() {
+
+    function showForm() {
         document.getElementById('myForm').style.display = 'block';
     }
     function closeReset() {
@@ -512,7 +523,7 @@ function showForm() {
         document.getElementById("myForm").reset();
     }
     
-(function() {
+ (function() {
     document.addEventListener("DOMContentLoaded", function() {
         var toggleMenus = document.querySelectorAll('.toggle-menu');
         toggleMenus.forEach(function(toggleMenu) {
@@ -564,12 +575,6 @@ function showForm() {
             location.reload();
         });
 
-        
-
-        btnDeleteUser.addEventListener("click", function() {
-            alert("test");
-        });
-
         var headers = document.querySelectorAll('#tableau th');
 
         headers.forEach(function(header, index) {
@@ -578,7 +583,7 @@ function showForm() {
             });
         });
 
-        function sortTable(columnIndex) {
+                function sortTable(columnIndex) {
             var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
             table = document.getElementById("tableau");
             switching = true;
@@ -614,6 +619,7 @@ function showForm() {
                 }
             }
         }
+
         var headers = document.querySelectorAll('#tableau th');
 
         headers.forEach(function(header) {
@@ -627,8 +633,20 @@ function showForm() {
             });
         });
     });
+    var suppressionLinks = document.querySelectorAll('.suppression-link');
+    suppressionLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
+            if (confirmation) {
+                var url = link.getAttribute('href');
+                window.location.href = url;
+            } else {
+            }
+        });
+    });
     
-})();
+ })();
 </script>
 
 
