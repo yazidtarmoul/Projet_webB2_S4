@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accord Energie </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    background-color: #497E8E; 
+    color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  }
+
+  .conteneur-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    position: relative;
+    width: 150px;
+    height: 100px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .profil {
+    display: flex;
+    align-items: center;
+  }
+
+  .parametres {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  .photo-profil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .nom-utilisateur {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  main {
+    display: flex;
+  }
+
+  .conteneur-principal {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 50px);
+  }
+
+  
+
+  .contenu {
+    flex: 1;
+    position: relative;
+    padding: 20px;
+    overflow: auto; 
+  }
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .tableau-container {
+    margin-top: 30px;
+    width: 100%;
+    height: 100%; 
+    max-height: 400px;
+    overflow: auto; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  }
+
+  .tableau {
+    width: fit-content;
+    min-width: 100%; 
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+
+  thead {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .fleche {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border: 4px solid transparent;
+  }
+
+  /* MENU MENU*/
+
+  .menu {
+    width: 200px;
+    background-color: #cfe2f3; 
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; 
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  a:hover {
+    color: #000;
+  }
+  .menu-button {
+    cursor: pointer;
+    padding: 5px 10px;
+   /* background-color: #ccc;*/
+    /*border: 1px solid #999;*/
+    /*border-radius: 4px;*/
+    display: inline-block;
+  }
+
+  .menu-button:hover {
+    background-color: #ddd;
+  }
+
+  .sous-menu {
+    display: none;
+  }
+
+  .sous-menu.active {
+    display: block;
+  }
+  /*fin menu*/
+
+  .action {
+    width: 18px;
+    height: 18px;
+  }
+  .custom-select-width {
+    width: 200px; 
+}
+
+.action_bar {
+    display: flex;
+    align-items: center;
+}
+
+.action_1,
+.action_2,
+.action_3 {
+    font-size: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    padding: 5px; 
+    transition: background-color 0.3s ease, border 0.3s ease, border-radius 0.3s ease; 
+    display: flex;
+    align-items: center; 
+}
+
+.action_1:hover,
+.action_2:hover,
+.action_3:hover {
+    background-color: #999999; 
+    border-radius: 5px; 
+}
+
+.action_content {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.textaction1,
+.textaction2,
+.textaction3 {
+    margin: 0; 
+}
+
+.textaction1:hover,
+.textaction2:hover,
+.textaction3:hover {
+    background-color: #999999; 
+    border-radius: 5px; 
+}
+
+
+
+
+.action_bar h1{
+  font-size: 15px;
+  margin-right: 8px;
+}
+    #tableau th {
+        position: relative; 
+        cursor: pointer; 
+    }
+
+    #tableau th::after {
+        content: ''; 
+        position: absolute; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0); 
+        transition: background-color 0.3s ease; 
+        pointer-events: none; 
+    }
+
+    #tableau th:hover::after {
+        background-color: rgba(0, 255, 0, 0.3)
+    }
+#myForm {
+    display: none;
+    position: absolute !important;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    width: 300px;
+    height:600px;
+}
+
+#myForm h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#myForm label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#myForm input[type="text"],
+#myForm input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#myForm input[type="submit"] {
+    background-color: #497E8E;
+    color: #fff;
+    cursor: pointer;
+}
+
+#myForm input[type="submit"]:hover {
+    background-color: #35565d;
+}
+
+#closeFormButton {
+    margin-top: 0px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #ccc;
+}
+
+#closeFormButton:hover {
+    background-color: #bbb;
+}
+
+ 
+</style>
+
+<body>
+  <header>
+    <div class="conteneur-header">
+      <img src="img/logo.png" alt="Logo" class="logo">
+      <h1 style = "font-size: 35px;">Tableau {% if action %}
+                            {{ action }}
+                        {% endif %} </h1>
+      <div class="profil">
+        <img src="img/settings.png" alt="Paramètres" class="parametres">
+        <img src="img/image 18.png" alt="Photo de profil" class="photo-profil" >
+        <p style="color: #f2f2f2;" class="nom-utilisateur">
+          {% if NomPrenom %}
+            {{ NomPrenom }}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </header>
+    {% block content %}{% endblock %}
+</body>
+<script>
+
+    function showForm() {
+        document.getElementById('myForm').style.display = 'block';
+    }
+    function closeReset() {
+        document.getElementById('myForm').style.display = 'none';
+        document.getElementById("myForm").reset();
+    }
+    
+ (function() {
+    document.addEventListener("DOMContentLoaded", function() {
+        var toggleMenus = document.querySelectorAll('.toggle-menu');
+        toggleMenus.forEach(function(toggleMenu) {
+            toggleMenu.addEventListener('click', function() {
+                var targetMenu = toggleMenu.querySelector('.sous-menu');
+                targetMenu.classList.toggle('active');
+            });
+        });
+
+        document.getElementById('triButton').addEventListener('click', function() {
+            var tbody = document.querySelector('#tableau tbody');
+            var rows = Array.from(tbody.querySelectorAll('tr'));
+
+            rows.sort(function(rowA, rowB) {
+                var idA = parseInt(rowA.cells[1].textContent); 
+                var idB = parseInt(rowB.cells[1].textContent);
+                return idA - idB;
+            });
+
+            rows.forEach(function(row) {
+                tbody.appendChild(row);
+            });
+        });
+
+        document.getElementById('filterButton').addEventListener('click', function() {
+            var selectColumn = document.getElementById('selectColumn').selectedIndex;
+            var filterValue = document.getElementById('inputFilter').value.toUpperCase();
+            var rows = document.querySelectorAll('#tableau tbody tr');
+
+            console.log("selectColumn:", selectColumn); 
+            console.log("filterValue:", filterValue);   
+
+            rows.forEach(function(row) {
+                var cellText = row.cells[selectColumn + 1].textContent.toUpperCase(); 
+                console.log("Contenu de la cellule:", cellText); 
+                if (cellText.includes(filterValue)) {
+                    row.style.display = ""; 
+                } else {
+                    row.style.display = "none"; 
+                }
+            });
+        });
+
+        var btnRefresh = document.getElementById("btn_refresh");
+        var btnAddUser = document.getElementById("btn_add_user");
+        var btnDeleteUser = document.getElementById("btn_delete_user");
+
+        btnRefresh.addEventListener("click", function() {
+            location.reload();
+        });
+
+        
+
+
+
+        var headers = document.querySelectorAll('#tableau th');
+
+        headers.forEach(function(header, index) {
+            header.addEventListener('click', function() {
+                sortTable(index);
+            });
+        });
+
+                function sortTable(columnIndex) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("tableau");
+            switching = true;
+            dir = "asc"; 
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("td")[columnIndex];
+                    y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+                    if (dir === "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir === "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount === 0 && dir === "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        var headers = document.querySelectorAll('#tableau th');
+
+        headers.forEach(function(header) {
+            header.addEventListener('mouseover', function() {
+                var rect = header.getBoundingClientRect();
+                var overlay = document.getElementById('overlay');
+                overlay.style.top = rect.top + 'px';
+                overlay.style.left = rect.left + 'px';
+                overlay.style.width = rect.width + 'px';
+                overlay.style.height = rect.height + 'px';
+            });
+        });
+    });
+    
+ })();
+</script>
+</html>
+
+
+
+
