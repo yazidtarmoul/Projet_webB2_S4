@@ -144,6 +144,13 @@ class Page
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+        public function getAllUrgence(){
+        $sql = 'SELECT * FROM urgence_deg';
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
     public function selectIntervention(int $userId) {
            $sql = 'SELECT `interventionID`, `titre`, `date`, `heure`, `adresse`, `codepostal`, `codepostal`, `ville`, `codepostal`,`pays`
            FROM intervention WHERE interventionID = :id';
@@ -256,7 +263,8 @@ class Page
     public function getUrgence() {
         $sql = "SELECT intervention.urgence_ID, urgence_deg.type_urgence AS type_urgence
                 FROM intervention
-                LEFT JOIN urgence_deg ON intervention.urgence_ID = urgence_deg.urgence_ID";
+                LEFT JOIN urgence_deg ON intervention.urgence_ID = urgence_deg.urgence_ID
+                ORDER BY intervention.ordre";
         $statement = $this->link->prepare($sql); 
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -264,7 +272,8 @@ class Page
     public function getStatut() {
         $sql = "SELECT intervention.statutID, statut.typeStatut AS typeStatut
                 FROM intervention
-                LEFT JOIN statut ON intervention.statutID = statut.statutID";
+                LEFT JOIN statut ON intervention.statutID = statut.statutID
+                ORDER BY intervention.ordre";
         $statement = $this->link->prepare($sql); 
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -338,5 +347,43 @@ class Page
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+        public function GetInt(int $ID, String $table_name){
+        $sql = "SELECT interventionID FROM intervention WHERE intervention.".$table_name."= :id";
+        $stmt = $this->link->prepare($sql);
+        try {
+            $res = $stmt->execute(['id' => $ID]);
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    public function GetIntclient(int $ID, String $table_name){
+        $sql = "SELECT interventionID, date, titre, heure, adresse, inter_ID, clientID, standID, urgence_ID, statutID
+            FROM intervention
+            WHERE ".$table_name." = :id";
+        $stmt = $this->link->prepare($sql);
+        try {
+            $res = $stmt->execute(['id' => $ID]);
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function intervenantIntervention() {   
+        $sql = "SELECT i.interventionID, GROUP_CONCAT(CONCAT(u.nom, ' ', u.prenom)) as users 
+                FROM intervenant i 
+                JOIN User u ON i.UserID = u.UserID GROUP BY i.interventionID;";
+    
+        $stmt = $this->link->prepare($sql);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
         
 }
