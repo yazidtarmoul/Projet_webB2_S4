@@ -7,7 +7,7 @@
         {% endif %}
         </div> 
     <header class = "header">
-    <img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
+    <a href="acceuil.php"><img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
     <a href="logout.php"><img class ="imgheader2"src="img/img_logout.png" alt="Logo paramètre " ></a>
     <a href="profile.php"><img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" ></a>
 </header>
@@ -78,11 +78,9 @@
             <div class="col-sm-4">
                 <label for="ugence" class="form-label">Etat d'urgence:</label>
                 <select  id="urgence" name="urgence" class="form-select" required="required">
-                  <option value="selected" selected>Sélectionner le degré d'urgence{{urgence}}</option>
-                  <option value="Faible">Faible</option>
-                  <option value="Moyen">Moyen</option>
-                  <option value="adeterminer">A detérminer</option>
-                  <option value="eleve">Elevé</option>
+                    {% for urg in toto1 %}
+                  <option value="{{urg['urgence_ID']}}">{{urg['type_urgence']}}</option>
+                    {% endfor %}
                 </select>
             </div>
               <div class="col-sm-4">
@@ -103,10 +101,6 @@
                             value="{{pays}}">
             </div>
         </div>    
-        <div class="row g-2 col-sm-15">
-            <label for="description" class="form-label">Description du problème :</label>
-            <textarea name="description" id="description" cols="130" rows="5" class="form-control">{{description}}</textarea>
-        </div>
         <div class="d-grid gap-1 col-4 mx-auto row g-2">
         <input type="submit" name="envoyer" value="Envoyer" class="btn btn-dark">
         </div>

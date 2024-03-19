@@ -471,4 +471,54 @@ footer {
   .close:hover {
     color: red;
   }
+  .intervlien{
+    width :auto;
+    background-color: #70b9cf;
+    border-radius: 10px;
+    margin-left: 50px;
+  }
+  .parallax {
+    background-image: url('https://static8.depositphotos.com/1000124/984/i/450/depositphotos_9844164-stock-photo-forest.jpg'); 
+    background-attachment: fixed;
+    background-size: cover;
+    height: 500px; 
+    background-position: center;
+  }
+  .parallax2 {
+    background-image: url('https://images.pexels.com/photos/8853536/pexels-photo-8853536.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); 
+    background-attachment: fixed;
+    background-size: cover;
+    height: 500px; 
+    background-position: center;
+  }
+  .parallax3 {
+    background-image: url('https://images.pexels.com/photos/2990644/pexels-photo-2990644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); 
+    background-attachment: fixed;
+    background-size: cover;
+    height: 500px; 
+    background-position: center;
+  }
+  .parallax4 {
+    background-image: url('https://images.pexels.com/photos/824544/pexels-photo-824544.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); 
+    background-attachment: fixed;
+    background-size: cover;
+    height: 500px; 
+    background-position: center;
+  }
+
+  .texte-centre-parallax {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    font-size: 3vw;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    color: #ffffff; 
+    padding: 20px;
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
   

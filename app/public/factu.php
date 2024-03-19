@@ -16,5 +16,5 @@ if (!$page->session->isConnected()) {
 $userId = $page->session->get('id');
 $donn = $page->selectUser($userId);
 
-echo $page->render('acceuil.html.twig', ['nom'=> $donn['nom'],
+echo $page->render('home/factu.html.twig', ['nom'=> $donn['nom'],
                                          'prenom'=>$donn['prenom']]);

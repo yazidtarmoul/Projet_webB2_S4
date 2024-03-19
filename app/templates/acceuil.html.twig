@@ -2,7 +2,7 @@
 {% block content %}
 <div>
    <header class = "header">
-    <img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
+    <a href="acceuil.php"><img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
     <a href="logout.php"><img class ="imgheader2"src="img/img_logout.png" alt="Logo paramètre " ></a>
     <a href="profile.php"><img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" ></a>
 </header>
@@ -18,12 +18,14 @@
          <img class="img20" src="img/image 20.png" alt="Logo ">
         <div class ="actions">
             <div class ="facturation">
+                <a href="factu.php">
                 <img class="imgfact" src="img/facturation.png" alt="facturation logo">
                 <p><strong>Facturation</strong></p>
             </div>
             <div  class="planning">
+                <a href="">
                 <img class="imgpla" src="img/planning.png" alt="Logo planning">
-                <p><strong>Planning</strong></p>
+                <p><strong>Projets</strong></p>
             </div>
             <div class ="intervention">
                  <a href="form_intervention.php">
@@ -34,7 +36,7 @@
 
         </div>
            <div class ="faq1">
-        <div class ="faq">
+        <div class ="faq" style="overflow: auto;">
             <h1 id ="faq">FAQ :</h1>
             <pre>
                 <a class="faqliens" href="">Lorem ipsum, dolor sit amet consectetur adipisicing elit.essitatibus impedit</a><br>
@@ -45,10 +47,9 @@
             </pre>
         </div> 
         </div>
-        <div class="lastproject">
-            <h1>Last Project</h1>
+        <div class="lastproject" style="overflow: auto;">
             <div class ="intitule1">
-                <h5>Intitulé de projet 1</h5>
+                <h5>Panneaux solaire à Bali !</h5>
                 <div class ="preimg1">
                 <pre>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -96,18 +97,17 @@
         <div class="liensutile">
             <h3>Liens Utiles:</h3>
             <ul>
-                <li><a href="">Conditions d'utilisation</a></li>
-                <li><a href=""> Politique de confidentialité</a></li>
-                <li><a href="">FAQ</a></li>
+                <li><a href="CU.php">Conditions d'utilisation</a></li>
+                <li><a href="PC.php"> Politique de confidentialité</a></li>
+                <li><a href="FAQ.php">FAQ</a></li>
             </ul>
         </div>
         <div class="liensrapides">
             <h3>Liens Rapides:</h3>
                 <ul>
-                    <li><a href="">Accueil</a></li>
-                    <li><a href="">À propos de nous</a></li>
-                    <li><a href="">Projets</a></li>
-                    <li><a href="">Contact</a></li>
+                    <li><a href="acceuil.php">Accueil</a></li>
+                    <li><a href="a_propos.php">À propos de nous</a></li>
+                    <li><a href="projet.php">Projets</a></li>
                 </ul>
         </div>
         <div class="partenaireslogos">

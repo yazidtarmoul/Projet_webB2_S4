@@ -18,11 +18,42 @@ class Page
         ]);
         $this->link = new \PDO('mysql:host=mysql;dbname=B2-paris',"root","");
     }
-    public function insert(string $table_name,array$data)
-    {
-        $sql = "insert into ".$table_name." (email,password) VALUES (:email, :password)";   
+    public function insert(string $table_name, array $data){
+        $columns = implode(', ', array_keys($data));
+        $placeholders = ':' . implode(', :', array_keys($data));
+
+        $sql = "INSERT INTO " . $table_name . " (" . $columns . ") VALUES (" . $placeholders . ")";
+
         $stmt = $this->link->prepare($sql);
-        $stmt->execute($data); 
+        $stmt->execute($data);
+    }
+    public function updateUser2(array $currentUser, array $newUserData) {
+        $setClause = '';
+
+        foreach ($newUserData as $key => $value) {
+            if (array_key_exists($key, $currentUser)) {
+                $setClause .= $key . ' = :' . $key . ', ';
+            }
+        }
+        // Supp virgule de fin
+        $setClause = rtrim($setClause, ', ');
+        $sql = "UPDATE users SET " . $setClause . " WHERE id = :userID";
+        try {
+            $this->link->beginTransaction();
+            $stmt = $this->link->prepare($sql);
+
+            foreach ($newUserData as $key => $value) {
+                if (array_key_exists($key, $currentUser)) {
+                    $stmt->bindValue(':' . $key, $value);
+                }
+            }
+            $stmt->bindValue(':userID', $currentUser['id']);
+            $stmt->execute();
+            $this->link->commit();
+        } catch ( \PDOException $e) {
+            $this->link->rollBack();
+            throw new \Exception("Erreur lors de la mise à jour de l'utilisateur : " . $e->getMessage());
+        }
     }
     public function getUserByEmail(string $Email)
     {
@@ -61,28 +92,20 @@ class Page
             }
         }
     }
-    
-    public function intert_urgence(string $table_name, array $data1) {
-        if ($this->link) { 
-            $sql1 = "INSERT INTO ". $table_name ." (type_urgence, description) VALUES (:urgence, :description)";
-            $stmt2 = $this->link->prepare($sql1);
-            $stmt2->bindParam(":urgence", $data1["type_urgence"]);
-            $stmt2->bindParam(":description", $data1["description"]);
-    
-            try {
-                $stmt2->execute();
-            } catch (\PDOException $e) {
-                var_dump($e->getMessage());
-                throw new \Exception($e->getMessage());
-            }
-        }
-    }
     public function selectidstatuttype(String $statutid){
         $sql1 = "SELECT statutID FROM statut where typeStatut=:Typec";
         $stmt1 = $this->link->prepare($sql1);
         $stmt1->execute(['Typec' => $statutid]);
         $type = $stmt1->fetch(\PDO::FETCH_ASSOC);
         return $type;
+
+    }
+    public function selecturgencetype(String $urgneceid){
+        $sql1 = "SELECT urgence_ID FROM urgence_deg where type_urgence=:Typec";
+        $stmt1 = $this->link->prepare($sql1);
+        $stmt1->execute(['Typec' => $urgneceid]);
+        $type1 = $stmt1->fetch(\PDO::FETCH_ASSOC);
+        return $type1;
 
     }
     
@@ -144,6 +167,13 @@ class Page
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+        public function getAllUrgence(){
+        $sql = 'SELECT * FROM urgence_deg';
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
     public function selectIntervention(int $userId) {
            $sql = 'SELECT `interventionID`, `titre`, `date`, `heure`, `adresse`, `codepostal`, `codepostal`, `ville`, `codepostal`,`pays`
            FROM intervention WHERE interventionID = :id';
@@ -153,11 +183,14 @@ class Page
            return $donn;
     } 
     public function selecturgencedeg_intervention(int $userId){
-        $sql = "SELECT intervention.urgence_ID , urgence_deg.type_urgence AS type_urgence, urgence_deg.description AS description FROM intervention LEFT JOIN urgence_deg ON  urgence_deg.urgence_ID = intervention.urgence_ID WHERE intervention.interventionID =:id ";
+        $sql="SELECT intervention.urgence_ID, urgence_deg.type_urgence AS type_urgence
+        FROM intervention
+        LEFT JOIN urgence_deg ON intervention.urgence_ID = urgence_deg.urgence_ID
+        WHERE intervention.interventionID =:id";
         $stmt = $this->link->prepare($sql);
-        $stmt->execute(['id'=> $userId]);
-        $urgdeg = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $urgdeg;
+        $stmt->execute(["id"=> $userId]);
+        $urgence = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $urgence;
     }  
     
     public function selctstatut_interv(int $userId) {
@@ -183,14 +216,27 @@ class Page
         $stmt = $this->link->prepare($sql);
         $stmt->bindParam("commentaire", $data["commentaire"]);
         $stmt->bindParam("id", $data["id"]);
-        try{
-            $stmt->execute();
-
-        }catch( \PDOException $e){
-              throw new \Exception($e->getMessage());
+            try{
+                $stmt->execute();
+    
+            }catch( \PDOException $e){
+                  throw new \Exception($e->getMessage());
+            }
         }
     }
-}
+    /*
+    public function selectclient(){
+        $sql= "SELECT id,nom,prenom from users where role = client";
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function selectintervenant(){
+        $sql= "SELECT id,nom,prenom from users where role = intervenant";
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }*/
        
     public function delete(int $id, String $table_name, String $colname){
         $sql = "DELETE FROM ".$table_name." WHERE ".$colname."= :id";
@@ -256,7 +302,8 @@ class Page
     public function getUrgence() {
         $sql = "SELECT intervention.urgence_ID, urgence_deg.type_urgence AS type_urgence
                 FROM intervention
-                LEFT JOIN urgence_deg ON intervention.urgence_ID = urgence_deg.urgence_ID";
+                LEFT JOIN urgence_deg ON intervention.urgence_ID = urgence_deg.urgence_ID
+                ORDER BY intervention.ordre";
         $statement = $this->link->prepare($sql); 
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -264,7 +311,8 @@ class Page
     public function getStatut() {
         $sql = "SELECT intervention.statutID, statut.typeStatut AS typeStatut
                 FROM intervention
-                LEFT JOIN statut ON intervention.statutID = statut.statutID";
+                LEFT JOIN statut ON intervention.statutID = statut.statutID
+                ORDER BY intervention.ordre";
         $statement = $this->link->prepare($sql); 
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -275,6 +323,13 @@ class Page
         $statement = $this->link->prepare($sql); 
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getUserById(int $userId) {
+        $sql = "SELECT * FROM users WHERE id = :userId";
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute(['userId' => $userId]);
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $user;
     }
     public function getUserEmail(){
         $sql = "SELECT email FROM users";
@@ -338,5 +393,75 @@ class Page
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+        public function GetInt(int $ID, String $table_name){
+        $sql = "SELECT interventionID FROM intervention WHERE intervention.".$table_name."= :id";
+        $stmt = $this->link->prepare($sql);
+        try {
+            $res = $stmt->execute(['id' => $ID]);
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    public function GetIntclient(int $ID, String $table_name){
+        $sql = "SELECT interventionID, date, titre, heure, adresse, inter_ID, clientID, standID, urgence_ID, statutID
+            FROM intervention
+            WHERE ".$table_name." = :id";
+        $stmt = $this->link->prepare($sql);
+        try {
+            $res = $stmt->execute(['id' => $ID]);
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function intervenantIntervention() {   
+        $sql = "SELECT i.interventionID, GROUP_CONCAT(CONCAT(u.nom, ' ', u.prenom)) as users 
+                FROM intervenant i 
+                JOIN users u ON i.id = u.id GROUP BY i.interventionID;";
+    
+        $stmt = $this->link->prepare($sql);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    public function getIntintervenant(int $ID){
+        $sql ="SELECT intervention.interventionID, 
+                intervention.date, 
+                intervention.titre, 
+                intervention.heure, 
+                intervention.adresse, 
+                intervention.clientID, 
+                intervention.urgence_ID,
+                intervention.statutID,
+                client.nom AS nom_client,
+                urgence_deg.type_urgence,  
+                statut.typeStatut          
+                FROM intervention
+                INNER JOIN intervenant ON intervention.interventionID = intervenant.interventionID
+                INNER JOIN users ON intervenant.id = users.id
+                LEFT JOIN urgence_deg ON intervention.urgence_ID = urgence_deg.urgence_ID  
+                LEFT JOIN statut ON intervention.statutID = statut.statutID
+                LEFT JOIN users AS client ON intervention.clientID = client.id 
+
+                
+                WHERE users.id = :id
+                ORDER BY intervention.ordre";
+            
+        $stmt = $this->link->prepare($sql);
+        $stmt->bindParam(':id', $ID, \PDO::PARAM_INT);
+        try {
+            $res = $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
         
 }

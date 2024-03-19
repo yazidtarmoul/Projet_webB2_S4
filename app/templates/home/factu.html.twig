@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div>
+   <header class = "header">
+    <a href="acceuil.php"><img class ="imgheader1" src="img/image-removebg-preview 2.png" alt="Logo accord energie ">
+    <a href="logout.php"><img class ="imgheader2"src="img/img_logout.png" alt="Logo paramètre " ></a>
+    <a href="profile.php"><img class ="imgheader3"src="img/image 18.png" alt="Logo page profile" ></a>
+</header>
+<div class="parallax2"></div>
+    <div class="texte-centre-parallax">
+        À propos d'AccordEnergie
+    </div>
+<div class="about-section">
+    <table border="1">
+    <thead>
+        <tr>
+            <th>Article</th>
+            <th>Quantité</th>
+            <th>Prix Unit.</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Panneau solaire</td>
+            <td>1</td>
+            <td>300€</td>
+        </tr>
+        <tr>
+            <td>Installation</td>
+            <td>1</td>
+            <td>150€</td>
+        </tr>
+        <tr>
+            <td>Consultation</td>
+            <td>1</td>
+            <td>50€</td>
+        </tr>
+    </tbody>
+</table>
+<p class="text-center">17/03/2024</p>
+    <footer>
+        <div class ="informationcontact">
+            <h3>Informations de Contact:</h3>
+            <ul>
+                <li>Adresse de l'entreprise: 123 Rue des Innovations, Ville Verte</li>
+                <li>Numéro de téléphone: +1 (123) 456-7890</li>
+                <li>Adresse e-mail: contact@accordenergie.com</li>
+            </ul>
+        </div>
+        <div class="liensutile">
+            <h3>Liens Utiles:</h3>
+            <ul>
+                <li><a href="CU.php">Conditions d'utilisation</a></li>
+                <li><a href="PC.php"> Politique de confidentialité</a></li>
+                <li><a href="FAQ.php">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="liensrapides">
+            <h3>Liens Rapides:</h3>
+                <ul>
+                    <li><a href="acceuil.php">Accueil</a></li>
+                    <li><a href="a_propos.php">À propos de nous</a></li>
+                    <li><a href="projet.php">Projets</a></li>
+                </ul>
+        </div>
+        <div class="partenaireslogos">
+            <h3>Partenaires et Collaborateurs:</h3>
+            <img src="img/partenaire1.png" alt="logo partenaire">
+            <img src="img/partenaire2.png" alt="logo partenaire">
+            <img src="img/partenaire3.png" alt="logo partenaire">
+            <img src="img/partenaire4.png" alt="logo partenaire">
+            <img src="img/partenaire5.png" alt="logo partenaire">
+
+        </div>
+    </footer>
+</div>
+{% endblock %}

@@ -8,24 +8,30 @@ $page = new Page();
 $user = $page->session->get('User');
 if ($user) {
     $user_nom = $page->session->getNom();
+
     $user_prenom = $page->session->getPrenom();
 }
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 $tableData = $columnNames = [];
 
+$specificINTid = $page->GetInt($page->session->getID(), 'standID');
+//var_dump($specificINTid);
+$idstand =$page->session->getID();
+
 switch ($action) {
     case 'supprimer':
         $id = (int) $_GET['id'];
+        //var_dump($id);
         $tablename = $_GET['tbname'];
         $colname = $_GET['colname'];
         $page->delete($id, $tablename ,$colname);
         $action = $tablename;
-        if ($tablename == "users"){
+        if ($tablename == "User"){
             $action = 'utilisateurs';
         }
         //var_dump($tablename);
-        header("Location: admin.php?action=".$tablename);    
+        header("Location: standardiste.php?action=".$tablename);
         break;
     case 'intervention':
         $tableData = [
@@ -40,12 +46,13 @@ switch ($action) {
             'statut' => $page->getStatut(),
             'intervenant'=>$page->intervenantIntervention()
         ];
+        //var_dump($tableData);
 
         break; 
 
     case 'utilisateurs':
         $tableData = [
-            'id'=> $page->getUserId(),
+            'UserID'=> $page->getUserId(),
             'UserEmail'=>$page->getUserEmail(),
             'UserNom'=>$page->getUserNom(),
             'UserPrenom'=>$page->getUserPrenom(), 
@@ -56,46 +63,15 @@ switch ($action) {
             'UserCreated'=>$page->getUserDate1(),
             'UserUpdated'=>$page->getUserDate2(),
             'UserIntervention'=>$page->getUserIntervention()
-            
         ];
         break; 
-    case 'statut':
-        $allStatut = $page->getAllStatus();
-        //var_dump($allStatut);
-        $tableData = [
-            'statut'=>$page->getAllStatus()
-        ];
-        //print($allStatut['typeStatut']);
-        break;
-    case 'urgence_deg':
-        $allUrgence = $page->getAllUrgence();
-        $tableData = [
-            'urgence_deg'=>$allUrgence
-        ];
-        //var_dump($tableData);
-        break;
 
     default:
         break;
 }
 
 if (isset($_POST['send'])) {
-    if ($_POST['form_type'] == 'user') {
-        $nom = filter_var($_POST['lastName'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $prenom = filter_var($_POST['firstName'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $email = filter_var($_POST['email'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        //$password = 
-        $page->insert('users', [
-            'email' => $email,
-            'nom' => $nom,
-            'prenom' => $prenom,
-            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-            'role' => 'client'
-        ]);
-        header("Location: admin.php?action=".$_GET['action']);
-        exit;
-    }
-    elseif ($_POST['form_type'] == 'intervention') {
+    if ($_POST['form_type'] == 'intervention') {
         $titre = filter_var($_POST['titre'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $adresse = filter_var($_POST['adresse'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $IDclient= filter_var($_POST['ID_client'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -104,39 +80,21 @@ if (isset($_POST['send'])) {
                 'clientID'=>$IDclient,
                 'adresse'=>$adresse,
         ]);
-    }elseif($_POST['form_type'] == 'Urgence'){
-        $urgence  = filter_var($_POST['urgencetype'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $page->insert('urgence_deg', [
-            'type_urgence'=>$urgence
-        ]);
     }
-    elseif($_POST['form_type'] == 'Statut'){
-            $statut  = filter_var($_POST['typestatut'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $page->insert('statut', [
-                'typeStatut'=>$statut]);
-            }
-header("Location: admin.php?action=".$_GET['action']);
-exit;
+    header("Location: standardiste.php?action=".$_GET['action']);
+    exit;
 }
-    
-
 
 if (!empty($tableData)) {
     $columnNames = array_keys($tableData);
 }
-if ($action == 'statut'){
-    $columnNames = ['statutID', 'typeStatut']; 
-}
-if ($action == 'urgence_deg'){
-    $columnNames = ['urgence_ID', 'typeStatut']; 
-}
-if ($action == 'intervention'){
-    $columnNames = ['InterventionID', 'dates', 'Titre', 'Heure', 'Adresse', 'Client', 'Standarsiste','Urgence','Statut','Intervenant', 'Commentaires', 'Show']; 
-}
 
-echo $page->render('admin/admin.html.twig', [
+
+echo $page->render('standardiste.html.twig', [
     'NomPrenom' => $user_nom . " " . $user_prenom,
     'columnNames' => $columnNames,
     'tableData' => $tableData,
-    'action' => $action 
+    'action' => $action,
+    'specificAction'=> $specificINTid,
+    'idstand'=>$idstand
 ]);
