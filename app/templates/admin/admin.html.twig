@@ -428,7 +428,11 @@ body {
                                             <a href="?action=supprimer&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID" class="suppression-link">
                                             <img src="img/poubelle.png" alt="" class="action" data-id="{{ tableData['UserID'][index]['UserID'] }}">
                                             </a>
+<<<<<<< HEAD
                                              <a href = "form_intervention.php?id={{  tableData['interventionIDs'][index]['interventionID']}}&tbname=intervention&colname=interventionID">
+=======
+                                             <a href = "#">
+>>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
                                              <img src="img/img_modif.png" alt="" class="action" data-id="">
                                              </a>
                                         </td>
@@ -442,7 +446,10 @@ body {
                                         <td>{{ tableData['stand'][index]['stand'] is null ? 'N/A' : tableData['stand'][index]['stand'] }}</td>
                                         <td>{{ tableData['urgence'][index]['type_urgence'] is null ? 'N/A' : tableData['urgence'][index]['type_urgence'] }}</td>
                                         <td>{{ tableData['statut'][index]['typeStatut'] is null ? 'N/A' : tableData['statut'][index]['typeStatut'] }}</td>
+<<<<<<< HEAD
                                         
+=======
+>>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
                                         <td>
                                             {% set users = tableData['intervenant'][index]['users'] %}
                                             {% if users is defined %}
@@ -451,6 +458,7 @@ body {
                                                 Aucun utilisateur
                                             {% endif %}
                                         </td>
+<<<<<<< HEAD
                                           <td> <a href="comments.php?action=&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID">
                                          <img src="img/cmntr.png" alt="" class="action imgcmntr" data-id="">
                                         </a></td>
@@ -458,20 +466,29 @@ body {
                                      <a href="Intervention.php?action=&id={{ tableData['interventionIDs'][index]['interventionID'] }}&tbname=intervention&colname=interventionID">
                                          <img src="img/345744-200.png" alt="" class="action imgcmntr" data-id="">
                                         </a> </td>
+=======
+>>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
                                     </tr>
                                 {% endfor %}
                             {% elseif action == 'utilisateurs' %}
                                 {% for index in range(0, tableData['id']|length-1) %}
                                     <tr>
                                         <td>
+<<<<<<< HEAD
                                          <a href="?action=supprimer&id={{ tableData['id'][index]['id'] }}&tbname=users&colname=id" class="suppression-link">
                                             <img src="img/poubelle.png" alt="" class="action" data-id="{{ tableData['id'][index]['id'] }}">
                                         </a>
                                         <a href = "user_info.php?id={{ tableData['id'][index]['id'] }}">
+=======
+                                         <a href="?action=supprimer&id={{ tableData['UserID'][index]['UserID'] }}&tbname=User&colname=UserID" class="suppression-link">
+                                            <img src="img/poubelle.png" alt="" class="action" data-id="{{ tableData['UserID'][index]['UserID'] }}">
+                                        </a>
+                                        <a href = "userInfo.php?id={{ tableData['UserID'][index]['UserID'] }}">
+>>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
                                         <img src="img/img_modif.png" alt="" class="action" data-id="">
                                         </a>
                                         </td>
-                                        <td>{{ tableData['id'][index]['id'] }}</td>
+                                        <td>{{ tableData['UserID'][index]['UserID'] }}</td>
                                         <td>{{ tableData['UserEmail'][index]['email'] is null ? 'N/A' : tableData['UserEmail'][index]['email'] }}</td>
                                         <td>{{ tableData['UserNom'][index]['nom'] is null ? 'N/A' : tableData['UserNom'][index]['nom'] }}</td>
                                         <td>{{ tableData['UserPrenom'][index]['prenom'] is null ? 'N/A' : tableData['UserPrenom'][index]['prenom'] }}</td>
@@ -668,7 +685,10 @@ body {
 
 </body>
 {% endblock %}
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1

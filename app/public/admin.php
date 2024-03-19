@@ -63,7 +63,7 @@ switch ($action) {
         $allStatut = $page->getAllStatus();
         //var_dump($allStatut);
         $tableData = [
-            'statut'=>$page->getAllStatus()
+            'statut'=>$page->getAllStatus();
         ];
         //print($allStatut['typeStatut']);
         break;
@@ -130,9 +130,12 @@ if ($action == 'statut'){
 if ($action == 'urgence_deg'){
     $columnNames = ['urgence_ID', 'typeStatut']; 
 }
+<<<<<<< HEAD
 if ($action == 'intervention'){
     $columnNames = ['InterventionID', 'dates', 'Titre', 'Heure', 'Adresse', 'Client', 'Standarsiste','Urgence','Statut','Intervenant', 'Commentaires', 'Show']; 
 }
+=======
+>>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
 
 echo $page->render('admin/admin.html.twig', [
     'NomPrenom' => $user_nom . " " . $user_prenom,

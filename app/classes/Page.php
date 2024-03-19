@@ -420,7 +420,11 @@ class Page
     public function intervenantIntervention() {   
         $sql = "SELECT i.interventionID, GROUP_CONCAT(CONCAT(u.nom, ' ', u.prenom)) as users 
                 FROM intervenant i 
+<<<<<<< HEAD
                 JOIN users u ON i.id = u.id GROUP BY i.interventionID;";
+=======
+                JOIN users u ON i.UserID = u.UserID GROUP BY i.interventionID;";
+>>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
     
         $stmt = $this->link->prepare($sql);
         try {
@@ -430,6 +434,7 @@ class Page
             throw new \Exception($e->getMessage());
         }
     }
+<<<<<<< HEAD
     public function getIntintervenant(int $ID){
         $sql ="SELECT intervention.interventionID, 
                 intervention.date, 
@@ -462,6 +467,8 @@ class Page
             throw new \Exception($e->getMessage());
         }
     }
+=======
+>>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
     
         
 }
