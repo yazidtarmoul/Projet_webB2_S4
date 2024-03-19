@@ -17,11 +17,8 @@ $tableData = $columnNames = [];
 
 $specificINTid = $page->GetInt($page->session->getID(), 'standID');
 //var_dump($specificINTid);
-<<<<<<< HEAD
-$idstand =$page->session->getID();
-=======
 //var_dump($page->session->getID());
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
+
 
 switch ($action) {
     case 'supprimer':
@@ -99,11 +96,6 @@ echo $page->render('standardiste.html.twig', [
     'columnNames' => $columnNames,
     'tableData' => $tableData,
     'action' => $action,
-<<<<<<< HEAD
-    'specificAction'=> $specificINTid,
-    'idstand'=>$idstand
-]);
-=======
     'specificAction'=> $specificINTid
 ]);
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
+

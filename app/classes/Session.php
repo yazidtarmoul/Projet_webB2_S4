@@ -61,8 +61,4 @@ class Session
         }
         return $_SESSION['User']['UserID'];
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1

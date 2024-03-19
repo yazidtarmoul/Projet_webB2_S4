@@ -17,10 +17,7 @@ $tableData = $columnNames = [];
 
 $specificINTid = $page->GetIntclient($page->session->getID(), 'clientID');
 //var_dump($specificINTid);
-<<<<<<< HEAD
-=======
-var_dump($page->session->getID());
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
+
 
 switch ($action) {
 
@@ -49,8 +46,6 @@ echo $page->render('client.html.twig', [
     'columnNames' => $columnNames,
     'tableData' => $tableData,
     'action' => $action,
-<<<<<<< HEAD
+
 ]);
-=======
-]);
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
+

@@ -1,4 +1,4 @@
-{% extends "baseTableau.html.twig" %}
+{% extends "BaseTableau.html.twig" %}
 
 {% block content %}
 
@@ -81,49 +81,27 @@
                         </thead>
                         <tbody>
                             {% if action == 'intervention' %}
-<<<<<<< HEAD
                                 {% for intervention in tableData['intervention'] %}
                                     <tr>
                                         <td>
                                             {% set currentInterventionID = intervention['interventionID'] %}
-=======
-                                {% for index in range(0, tableData['interventionIDs']|length-1) %}
-                                    <tr>
-                                        <td>
-                                            {% set currentInterventionID = tableData['interventionIDs'][index]['interventionID'] %}
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
                                             {% if currentInterventionID in specificAction|column('interventionID') %}
                                                 <a href="#">
                                                     <img src="img/img_modif.png" alt="" class="action" data-id="">
                                                 </a>
                                             {% endif %}
                                         </td>
-    
-<<<<<<< HEAD
-                    <td>{{ intervention['interventionID'] }}</td>
-                    <td>{{ intervention['date'] }}</td>
-                    <td>{{ intervention['titre'] }}</td>
-                    <td>{{ intervention['heure'] is null ? 'N/A' : intervention['heure'] }}</td>
-                    <td>{{ intervention['adresse'] is null ? 'N/A' : intervention['adresse'] }}</td>
-                    <td>{{ intervention['nom_client'] }}</td>
-                    <td>{{ intervention['standID'] is null ? 'N/A' : intervention['standID'] }}</td>
-                    <td>{{ intervention['type_urgence'] }}</td>
-                    <td>{{ intervention['typeStatut'] }}</td>
+                                        <td>{{ intervention['interventionID'] }}</td>
+                                        <td>{{ intervention['date'] }}</td>
+                                        <td>{{ intervention['titre'] }}</td>
+                                        <td>{{ intervention['heure'] is null ? 'N/A' : intervention['heure'] }}</td>
+                                        <td>{{ intervention['adresse'] is null ? 'N/A' : intervention['adresse'] }}</td>
+                                        <td>{{ intervention['nom_client'] }}</td>
+                                        <td>{{ intervention['standID'] is null ? 'N/A' : intervention['standID'] }}</td>
+                                        <td>{{ intervention['type_urgence'] }}</td>
+                                        <td>{{ intervention['typeStatut'] }}</td>
                                         <td>
                                             {% set users = intervenant[users] %}
-=======
-                                        <td>{{ tableData['interventionIDs'][index]['interventionID'] }}</td>
-                                        <td>{{ tableData['dates'][index]['date'] }}</td>
-                                        <td>{{ tableData['titre'][index]['titre'] }}</td>
-                                        <td>{{ tableData['heure'][index]['heure'] is null ? 'N/A' : tableData['heure'][index]['heure'] }}</td>
-                                        <td>{{ tableData['adresse'][index]['adresse'] is null ? 'N/A' : tableData['adresse'][index]['adresse'] }}</td>
-                                        <td>{{ tableData['client'][index]['client'] is null ? 'N/A' : tableData['client'][index]['client'] }}</td>
-                                        <td>{{ tableData['stand'][index]['stand'] is null ? 'N/A' : tableData['stand'][index]['stand'] }}</td>
-                                        <td>{{ tableData['urgence'][index]['type_urgence'] is null ? 'N/A' : tableData['urgence'][index]['type_urgence'] }}</td>
-                                        <td>{{ tableData['statut'][index]['typeStatut'] is null ? 'N/A' : tableData['statut'][index]['typeStatut'] }}</td>
-                                        <td>
-                                            {% set users = tableData['intervenant'][index]['users'] %}
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
                                             {% if users is defined %}
                                                 {{ users }}
                                             {% else %}
@@ -141,12 +119,5 @@
         </section>
     </div>
 </main>
-
-
-
-
-<<<<<<< HEAD
 {% endblock %}
-=======
-{% endblock %}
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
+

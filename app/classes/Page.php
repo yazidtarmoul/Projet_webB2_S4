@@ -238,15 +238,33 @@ class Page
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }*/
        
-    public function delete(int $id, String $table_name, String $colname){
-        $sql = "DELETE FROM ".$table_name." WHERE ".$colname."= :id";
-        $stmt = $this->link->prepare($sql);
+    public function delete(int $id, string $table_name, string $colname) {
         try {
+            // Démarrer une transaction
+            $this->link->beginTransaction();
+            
+            // Supprimer d'abord les commentaires associés à l'intervention
+            if ($table_name === 'intervention') {
+                $sqlComments = "DELETE FROM commentaire WHERE interventionID = :id";
+                $stmtComments = $this->link->prepare($sqlComments);
+                $stmtComments->execute(['id' => $id]);
+            }
+            
+            // Ensuite, supprimer l'intervention elle-même
+            $sql = "DELETE FROM $table_name WHERE $colname = :id";
+            $stmt = $this->link->prepare($sql);
             $stmt->execute(['id' => $id]);
+    
+            // Valider les modifications
+            $this->link->commit();
         } catch (\PDOException $e) {
+            // En cas d'erreur, annuler les modifications
+            $this->link->rollBack();
             throw new \Exception($e->getMessage());
         }
     }
+    
+    
      public function getInterventionIDs() {
         $sql = "SELECT interventionID FROM intervention";
         $statement = $this->link->prepare($sql); 
@@ -420,11 +438,9 @@ class Page
     public function intervenantIntervention() {   
         $sql = "SELECT i.interventionID, GROUP_CONCAT(CONCAT(u.nom, ' ', u.prenom)) as users 
                 FROM intervenant i 
-<<<<<<< HEAD
+
                 JOIN users u ON i.id = u.id GROUP BY i.interventionID;";
-=======
-                JOIN users u ON i.UserID = u.UserID GROUP BY i.interventionID;";
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
+
     
         $stmt = $this->link->prepare($sql);
         try {
@@ -434,7 +450,6 @@ class Page
             throw new \Exception($e->getMessage());
         }
     }
-<<<<<<< HEAD
     public function getIntintervenant(int $ID){
         $sql ="SELECT intervention.interventionID, 
                 intervention.date, 
@@ -467,8 +482,5 @@ class Page
             throw new \Exception($e->getMessage());
         }
     }
-=======
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
-    
-        
+          
 }

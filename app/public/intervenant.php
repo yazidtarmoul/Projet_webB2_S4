@@ -18,19 +18,17 @@ $tableData = $columnNames = [];
 $specificINTid = $page->GetInt($page->session->getID(), 'inter_ID');
 //var_dump($specificINTid);
 //var_dump($page->session->getID());
-<<<<<<< HEAD
+
 $test= $specificINTid = $page->getIntintervenant($page->session->getID());
 //var_dump($test);
-=======
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
 
 switch ($action) {
 
     case 'intervention':
         $tableData = [
-<<<<<<< HEAD
+
             'intervention'=>$test,
-=======
+
             'interventionIDs' => $page->getInterventionIDs(),
             'dates' => $page->getDates(),
             'titre' => $page->getTitre(),
@@ -40,7 +38,6 @@ switch ($action) {
             'stand' => $page->getStand(),
             'urgence' => $page->getUrgence(),
             'statut' => $page->getStatut(),
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
             'intervenant'=>$page->intervenantIntervention()
         ];
         //var_dump($tableData);
@@ -64,13 +61,11 @@ if (isset($_POST['send'])) {
     exit;
 }*/
 
-<<<<<<< HEAD
 $columnNames = ['intervention ID', 'date', 'titre', 'heure','adresse','client', 'standardiste', 'urgence', 'statut', 'intervenant'];
-=======
+
 if (!empty($tableData)) {
     $columnNames = array_keys($tableData);
 }
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
 
 
 echo $page->render('intervenant.html.twig', [
@@ -79,8 +74,5 @@ echo $page->render('intervenant.html.twig', [
     'tableData' => $tableData,
     'action' => $action,
     'specificAction'=> $specificINTid
-<<<<<<< HEAD
+
 ]);
-=======
-]);
->>>>>>> 2a52b7dfe4b159ed97686c5c78a825a8c9f0b1d1
